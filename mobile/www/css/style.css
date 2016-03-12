@@ -20,7 +20,7 @@
 
 .menu-header-content {
     position: absolute;
-    bottom: 0;
+    bottom: 7px;
     left: 16px;
 }
 .menu .avatar {
@@ -39,7 +39,8 @@
     width: 56px;
     background: url('../img/profile.jpg'); 
     background-size: cover; 
-    border: 2px solid #f0f0f0;top: 5px;
+    border: 2px solid #f0f0f0;
+    top: 7px;
 }
 
 .menu .bar.bar-header.expanded .side-menu-header-container {
