@@ -361,7 +361,7 @@ angular.module('starter.controllers', ['chart.js'])
 
 })
 
-.controller('PowerCtrl',function($scope, $interval, webSocket){
+.controller('PowerCtrl',function($scope, $interval){
        
     /***** google graph *****/
     

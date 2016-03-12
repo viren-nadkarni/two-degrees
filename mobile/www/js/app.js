@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.service', 'starter.directive','chart.js'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive','chart.js'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -21,8 +21,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.service', 's
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, webSocketProvider) {
-  webSocketProvider.setWebSocketURL('ws://gol05195.persistent.co.in:3000/sockjs/websocket');
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  //webSocketProvider.setWebSocketURL('ws://gol05195.persistent.co.in:3000/sockjs/websocket');
   //webSocketProvider.setWebSocketURL('ws://10.244.25.63:8080/test');
   $ionicConfigProvider.tabs.position('bottom');
   $stateProvider
