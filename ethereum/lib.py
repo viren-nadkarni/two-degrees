@@ -5,7 +5,7 @@ Created on Mar 12, 2016
 '''
 import httplib
 import json
-
+import datetime
 
 all_txns=[]
 '''
@@ -14,10 +14,10 @@ Input to_address to filter based on ID
 '''
 def get_all_blocks_txns(to_address=None):
     last_block_id=get_latest_block()
-    last_block_id=last_block_id['latestBlock']['number']
+    last_block_id=str(last_block_id['result']['number'])
     #print "last block %s" % last_block_id
     block_number=1
-    for block_number in range(1,int(last_block_id+1)):
+    for block_number in range(1,int(last_block_id,0)+1):
         get_all_tx(block_number,to_address)
     return all_txns
 
@@ -25,15 +25,22 @@ def get_all_tx(block_id,to_address=None):
     block=get_blk(block_id)
     #print block
     txns=block['result']['transactions']
+    timestamp=block['result']['timestamp']
     for txn in txns:
+        #txn['timestamp']='%s' % int(str(timestamp),0)
+        ts=(datetime.datetime.fromtimestamp(int(str(timestamp),0)).strftime('%d-%m-%Y %H:%M:%S'))
+        txn['timestamp']='%s' % ts
+        txn['value']=1.0*int(txn['value'], 16)/10**9
         if to_address!=None:
             #print str(txn['to'])
             #print str(to_address)
             if str(txn['to']) == str(to_address):
                 #print "Pi found"
                 all_txns.append(txn)
+
         else:
             all_txns.append(txn)
+
     return all_txns
 
 
@@ -49,7 +56,11 @@ def get_blk(blk_num):
 
 #eth_blockNumber
 def get_latest_block():
-    last_block_id=get_call("/stats",8080)
+    #last_block_id=get_call("/stats",8080)
+    #print last_block_id
+    #data = '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["latest", "latest"],"id":1}'
+    data = '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest", true],"id":1}'
+    last_block_id=post_call("/",data)
     #print last_block_id
     return last_block_id
 
@@ -76,3 +87,5 @@ def post_call(url,data):
 
 #print get_all_blocks_txns()
 #print get_all_blocks_txns('0x6015fb43e26226d80edc1c209ccd99ce2493497b')
+
+

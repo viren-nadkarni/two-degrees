@@ -21,14 +21,14 @@ app.debug = True
 __author__ = 'viren'
 __version__ = 'server-0.1'
 
-
 # parameters ##############################################
 
 rpc_endpoint = 'http://localhost:8545'
-master_wallet = '0x5a96b0777706b164a530c6d1f4118e646986d7eb' # viren1
+master_wallet = directory['viren1']
 contract_bytecode = None
 contract_address = None
-
+goals = None
+ledger = None
 
 # initializers ############################################
 
@@ -37,12 +37,10 @@ curs = conn.cursor()
 
 eth = ethjsonrpc.EthJsonRpc('127.0.0.1', 8545)
 
-
 # wrappers ################################################
 
 def log(message):
     print ' * ' + str(message)
-
 
 def get_transaction_count(coinbase):
     data = {"jsonrpc":"2.0",
@@ -53,15 +51,13 @@ def get_transaction_count(coinbase):
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
     return int(response["result"], 16)
 
-
 def get_usage_by_transaction_hash(tx_hash):
     data = {"jsonrpc":"2.0",
             "method":"eth_getTransactionByHash",
             "params":[tx_hash],
             "id":1}
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
-    return int(response["result"]["value"], 16)/(10**18)
-
+    return (1.0*int(response["result"]["value"], 16))/(10**9)
 
 def get_balance(coinbase):
     data = {"jsonrpc":"2.0",
@@ -71,7 +67,6 @@ def get_balance(coinbase):
 
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
     return int(response["result"], 16)
-
 
 def get_block(block_number):
     data = {"jsonrpc":"2.0",
@@ -85,7 +80,6 @@ def get_block(block_number):
             "size": int(response["result"]["size"], 16),
             "timestamp": int(response["result"]["timestamp"], 16)}
     return result
-
 
 def send_transaction(tx_from, tx_to, tx_amt):
     data = {"jsonrpc":"2.0",
@@ -101,7 +95,6 @@ def send_transaction(tx_from, tx_to, tx_amt):
         log('tx for {} requested'.format(tx_to))
     return response["result"]
 
-
 def compile_solidity(source):
     data = {"jsonrpc":"2.0",
             "method":"eth_compileSolidity",
@@ -110,9 +103,7 @@ def compile_solidity(source):
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
 
     log("Bytecode compiled")
-    log(response)
     return response['result']
-
 
 def create_contract(bytecode, coinbase):
     data = {"jsonrpc":"2.0",
@@ -128,7 +119,6 @@ def create_contract(bytecode, coinbase):
     except:
         log(response['error']['message'])
         abort(500)
-
     log("Contract initiated")
 
     data2 = {"jsonrpc":"2.0",
@@ -146,7 +136,6 @@ def create_contract(bytecode, coinbase):
     log("Contract mined")
 
     return response2['result']['contractAddress']
-
 
 def init_contract():
     global contract_bytecode
@@ -166,6 +155,18 @@ try:
 except:
     init_contract()
     pickle.dump((contract_bytecode, contract_address), open('pickle.store', 'w'))
+try:
+    goals = pickle.load(open('dump.pickle', 'r'))
+except:
+    goals = dict()
+    pickle.dump(goals, open('dump.pickle', 'w'))
+try:
+    ledger = pickle.load(open('lock.bin', 'r'))
+except:
+    ledger = dict()
+    for wallet in directory.keys():
+        ledger[wallet] = 0
+    pickle.dump(ledger, open('lock.bin', 'w'))
 
 # routes ##################################################
 
@@ -173,12 +174,10 @@ except:
 def apiindex():
     return jsonify(version=__version__)
 
-
 @app.route('/reset')
 def apireset():
     # recreate the contract?
     abort(501)
-
 
 @app.route('/stats')
 def stats():
@@ -192,22 +191,29 @@ def stats():
     return jsonify(totalTransactions=transactions,
             latestBlock=latest_block)
 
-
 @app.route('/stats/<coinbase>')
 def statscoinbase(coinbase):
-    # TODO: return carboncoin balance
-       
+# debug
     return jsonify(coinbase=coinbase,
-            carboncoinBalance=eth.call(coinbase, 'balance(address)', [coinbase], ['uint64'])[0],
-            lifetimeUsage=get_balance(coinbase),
+            carboncoinBalance=1234,
+            lifetimeUsage=(1.0*get_balance(coinbase))/10**9,
             transactions=get_transaction_count(coinbase))
+# debug
 
+    try:
+        carboncoin_balance = eth.call(contract_address, 'balance(address)', [coinbase], ['uint64'])[0]
+    except:
+        carboncoin_balance = 0
+
+    return jsonify(coinbase=coinbase,
+            carboncoinBalance=carboncoin_balance,
+            lifetimeUsage=(1.0*get_balance(coinbase))/10**9,
+            transactions=get_transaction_count(coinbase))
 
 @app.route('/usage/<coinbase>', methods=['GET', 'POST'])
 def apirecord(coinbase):
     if request.method == 'POST':
         # make ethereum transaction
-
         request_data = json.loads(request.data)
 
         # transfer etherse
@@ -216,13 +222,13 @@ def apirecord(coinbase):
             tx_from = request_data["from"]
         except:
             tx_from = master_wallet
-        tx_amt = request_data["quantity"] * 10**18
+        tx_amt = request_data["quantity"] * 10**9
         timestamp = datetime.datetime.strptime(request_data["date"], '%Y-%m-%d')
 
         tx_id = send_transaction(tx_from, tx_to, tx_amt)
 
         # increment contract cumulative usage
-        eth.call(coinbase, 'recordUsage(address, uint)', [coinbase, tx_amt], [])
+        #eth.call(contract_address, 'recordUsage(address, uint)', [coinbase, tx_amt], [])
 
         # record the tx id against coinbase in db
         # because https://github.com/ethereum/go-ethereum/issues/1897
@@ -246,31 +252,60 @@ def apirecord(coinbase):
         return jsonify(coinbase=coinbase,
                 usage=usage_list)
 
-
 @app.route('/goal/<coinbase>', methods=['GET', 'POST'])
 def apigoal(coinbase):
     if request.method == 'POST':
-        eth.call(coinbase, 'balance(address)', [coinbase], ['uint64'])[0]
+        request_data = json.loads(request.data)
+
+        target_usage = int(request_data['targetUsage'])
+        timestamp = int(time.mktime(datetime.datetime.strptime(request_data['targetDate'], '%Y-%m-%d').timetuple()))
+
+        eth.call_with_transaction(eth.eth_coinbase(),
+                contract_address,
+                'setGoal(address,uint64,uint64)',
+                [coinbase, target_usage, timestamp])
+        log('contract updated')
+        goals[coinbase] = ':'.join([coinbase, str(target_usage), str(timestamp)])
+        pickle.dump(goals, open('dump.pickle', 'w'))
+
+        return jsonify(status='success')
 
     elif request.method == 'GET':
-        abort(501)
+        try:
+            goal_usage = eth.call(contract_address, 'getGoal(address)', [coinbase], ['uint64'])
+        except:
+            print goals[coinbase].split(':')
+            goal_usage = goals[coinbase].split(':')[1] if coinbase in goals.keys() else 0
+
+        return jsonify(goalUsage=goal_usage)
 
 @app.route('/goal/check/<coinbase>')
 def apigoalcheck(coinbase):
     # check if goal has been met
     # if yes, distribute reward
     abort(501)
-
+    try:
+        eth.call_with_transaction(eth.eth_coinbase(),
+            contract_address,
+            'checkGoal(address,uint64)',
+            [coinbase, int(time.time())])
+    except:
+        pass
+    finally:
+        ledger[coinbase] += 10
 
 @app.route('/logs/transactions')
 def gettx():
-    abort(501)
+    return jsonify(transactions=lib.get_all_blocks_txns())
 
-@app.route('/logs/blocks')
-def getblk():
-    abort(501)
+@app.route('/logs/transactions/<coinbase>')
+def getwallettx(coinbase):
+    return jsonify(transactions=lib.get_all_blocks_txns(coinbase))
 
-
+@app.route('/contract')
+def contractapi():
+    return jsonify(contractAddress=contract_address,
+            contractBytecode=contract_bytecode)
 
 # serve ###################################################
 
