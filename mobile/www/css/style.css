@@ -1,1 +1,112 @@
 /* Empty. Add your own CSS if you like */
+.menu .bar.bar-header.expanded {
+    box-shadow: none;
+/*    color: #fff;*/
+    min-height: 150px;
+    padding: 0px;
+}
+
+.has-expanded-header {
+    top: 150px !important;
+}
+
+
+.menu .bar-header h2 {
+    bottom: 18px;
+    font-size: 18px;
+    left: 16px;
+    position: absolute;
+}
+
+.menu-header-content {
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+}
+.menu .avatar {
+    height: 88px;
+    width: 88px;
+}
+
+.avatar {
+    background-position: center center;
+    background-size: cover;
+    border-radius: 50%;
+    display: inline-block;
+    height: 56px;
+    left: 16px;
+    position: absolute;
+    width: 56px;
+    background: url('../img/profile.jpg'); 
+    background-size: cover; 
+    border: 2px solid #f0f0f0;top: 5px;
+}
+
+.menu .bar.bar-header.expanded .side-menu-header-container {
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/material2.jpg);
+    background-size: 100% 100%;
+}
+
+.menu .bar.bar-header.expanded .side-menu-header-container h2 {
+    color:#fff;
+}
+
+.menu-item-container {
+    padding: 0px;
+    height: 50px;
+}
+
+.menu-badges-container {
+    background-color: #8BC34A;
+    height: 100%;
+}
+
+.menu-badges-container .itemLabel {
+    color: #fff;
+    width: 50%;
+    height: 100%;
+    padding-top: 12px;
+    padding-left: 15px;
+    float: left;
+}
+
+.menu-badges-container .itemBadges {
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+.menu-badges-container .itemBadges #badge1{
+    background: url('../img/badge1.png');
+    background-size: 45px;
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 45px;
+    margin-top: 1px;
+    float: left;
+}
+
+.menu-badges-container .itemBadges #badge2{
+    background: url('../img/badge2.png');
+    background-size: 45px;
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 45px;
+    margin-top: 1px;
+    float: left;
+}
+
+.menu-badges-container .itemBadges #badge3{
+    background: url('../img/badge3.png');
+    background-size: 45px;
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 45px;
+    margin-top: 1px;
+    float: left;
+}
+
+
+
