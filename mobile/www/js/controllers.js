@@ -198,30 +198,53 @@ angular.module('starter.controllers', ['chart.js'])
     */
 	
 	
-}).controller("PowerMonthCtrl",function($scope, $interval){
+}).controller("PowerMonthCtrl",function($scope,$http, $interval){
 	
-	$scope.date = new Date();	
+	$scope.month = new Date();	
 	
-	
-	$scope.previousDay = function(){
+	$scope.previousMonth = function(){
 		$scope.disable = '';
-		$scope.date.setDate($scope.date.getDate()-1);
-	$scope.refreshGraph();		
+		
+		
+
+		if(!$scope.wait){
+			$scope.wait = true;
+			$scope.disable = '';
+			//$scope.disabled = true;
+			if($scope.month.getDate() == new Date().getMonth()){
+				$scope.disable = 'disabled';
+			}else{
+				$scope.month.setMonth($scope.month.getMonth()-1);
+				$scope.refreshGraph();
+			}
+				setTimeout(function() {
+					$scope.wait = false;
+				}, 1000);
+			}	
+			
 	}
 	
-	$scope.nextDay = function(){
-		$scope.disable = '';
-		//$scope.disabled = true;
-		if($scope.date.getDate() == new Date().getDate()){
-			$scope.disable = 'disabled';
-		}else{
-			$scope.date.setDate($scope.date.getDate()+1);			
-		}
+	$scope.nextMonth = function(){
+			
+		if(!$scope.wait){
+			$scope.wait = true;
+			$scope.disable = '';
+			//$scope.disabled = true;
+			if($scope.month.getMonth() == new Date().getMonth()){
+				$scope.disable = 'disabled';
+			}else{
+				$scope.month.setMonth($scope.month.getMonth()+1);
+				$scope.refreshGraph();
+			}
+				setTimeout(function() {
+					$scope.wait = false;
+				}, 1000);
+			}
 	}
 	$scope.refreshGraph = function(){
 		//d3.select("$chart").remove();
-		$( "#chart" ).html('');
-		//$scope.generateDayGraph();
+		//$( "#chart" ).html('');
+		$scope.loadMonthGraph();
 	}
 	
 	$scope.loadMonthGraph = function(){
@@ -260,7 +283,7 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 				{
 					label: "Baseline",
 					fillColor : "rgba(220,220,220,0.2)",
-					strokeColor : "#D81b60",
+					strokeColor : "#ee6e73",
 					datasetStrokeWidth : 4,
 					pointColor : "rgba(220,220,220,1)",
 					pointStrokeColor : "#fff",
@@ -300,7 +323,7 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 	}
 	$scope.loadMonthGraph();
 	
-}).controller("PowerDayCtrl",function($scope, $interval){
+}).controller("PowerDayCtrl",function($scope, $interval,$http){
 	
 	
 	$scope.date = new Date();
@@ -308,21 +331,54 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 	
 	
 	$scope.previousDay = function(){
+		
 		$scope.disable = '';
-		$scope.date.setDate($scope.date.getDate()-1);
-	$scope.refreshGraph();		
+		$scope.resetVar = false;
+		console.log($scope.setPrev);
+		
+		/*
+		if($scope.stopProcessing==true){
+			$scope.date.setDate($scope.date.getDate()+1);
+			$scope.setPrev = false;
+			$scope.resetVar = true;
+			setTimeout(function() {
+				$scope.stopProcessing = false;
+			}, 1000);
+			return;
+		}
+		*/
+		console.log($scope.wait);
+		if(!$scope.wait){
+			$scope.wait = true;
+			$scope.setPrev = true;
+			$scope.date.setDate($scope.date.getDate()-1);
+			$scope.refreshGraph();		
+			setTimeout(function() {
+				$scope.wait = false;
+			}, 1000);
+		} 
+		
 	}
 	
 	$scope.nextDay = function(){
-		$scope.disable = '';
-		//$scope.disabled = true;
-		if($scope.date.getDate() == new Date().getDate()){
-			$scope.disable = 'disabled';
-		}else{
-			$scope.date.setDate($scope.date.getDate()+1);			
+		
+		if(!$scope.wait){
+			$scope.wait = true;
+			$scope.disable = '';
+			//$scope.disabled = true;
+			if($scope.date.getDate() == new Date().getDate()){
+				$scope.disable = 'disabled';
+			}else{
+				$scope.date.setDate($scope.date.getDate()+1);			
+				$scope.refreshGraph();	
+			}
+			setTimeout(function() {
+					$scope.wait = false;
+			}, 1000);
 		}
 	}
-	$scope.refreshGraph = function(){
+	$scope.refreshGraph = function(day){
+		//console.log('tesse');
 		//d3.select("$chart").remove();
 		$( "#chart" ).html('');
 		$scope.generateDayGraph();
@@ -331,7 +387,12 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 	
 	$scope.generateDayGraph = function() {
 		var screenWidth = window.innerWidth;
-
+		$http.get("data/hourlyData.json")
+		.then(function(response) {
+				var data = response.data;
+				//console.log(response.data.daily_values[day].hourly_values);
+		});
+		
 		var margin = {
 				left: 20,
 				top: 20,
@@ -510,7 +571,7 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 			.transition().duration(800)
 
 		.style("fill", function(d, i) {
-				return "#c43333";
+				return "#ee6e73";
 			})
 			.each(function(d, i) {
 				//Search pattern for everything between the start and the first capital L
@@ -561,23 +622,7 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 		////////////////////////////////////////////////////////////
 
 		//The start date number and end date number of the months in a year
-		var monthData = [{
-			month: "12 PM ",
-			startDateID: 0,
-			endDateID: 30
-		}, {
-			month: "3 PM",
-			startDateID: 31,
-			endDateID: 58
-		}, {
-			month: "6 PM",
-			startDateID: 59,
-			endDateID: 89
-		}, {
-			month: "9 PM",
-			startDateID: 90,
-			endDateID: 119
-		}, {
+		var monthData = [ {
 			month: "12 AM",
 			startDateID: 120,
 			endDateID: 150
@@ -593,6 +638,22 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 			month: "9 AM",
 			startDateID: 212,
 			endDateID: 242
+		},{
+			month: "12 PM ",
+			startDateID: 0,
+			endDateID: 30
+		}, {
+			month: "3 PM",
+			startDateID: 31,
+			endDateID: 58
+		}, {
+			month: "6 PM",
+			startDateID: 59,
+			endDateID: 89
+		}, {
+			month: "9 PM",
+			startDateID: 90,
+			endDateID: 119
 		}];
 		radius = Math.min(width, height) / 2,
 			innerRadius = 0.3 * radius;
@@ -690,44 +751,40 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 			});
 	}
 
-	$scope.generateDayGraph();
-}).controller("PowerYearCtrl",function($scope, $interval){
+	$scope.generateDayGraph(0);
+}).controller("PowerYearCtrl",function($scope, $interval, $http){
 	
-    $scope.yearLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    $scope.type = 'StackedBar';
+			var download = $('.download'),
+			meter = $('.meter');
 
-    $scope.yearData = [
-      [65, 59, 90, 81, 56, 55, 40],
-      [28, 48, 40, 19, 96, 27, 100]
-    ];
-    $scope.colours = [
-      { // grey
-        fillColor: 'rgba(148,159,177,0.2)',
-        strokeColor: 'rgba(148,159,177,1)',
-        pointColor: 'rgba(148,159,177,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(148,159,177,0.8)'
-      },
-      { // dark grey
-        fillColor: 'rgba(77,83,96,0.2)',
-        strokeColor: 'rgba(77,83,96,1)',
-        pointColor: 'rgba(77,83,96,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(77,83,96,1)'
-      }
-    ];
+		$('.button-download').on('click', function(e) {
+		  download.toggleClass('is-active');
+		  
+		  setTimeout(function() {
+			meter.toggleClass('is-done');
+		  }, 1000);
+		  
+		  e.preventDefault();
+		});
+
+		$('#reset').on('click', function() {
+		  download.removeClass('is-active');
+		  meter.removeClass('is-done');
+		});
+
+   
 	
 	
 	$scope.date = new Date();
 	
 	
 	
-	$scope.previousDay = function(){
+	/*$scope.previousDay = function(){
+		console.log('asdasd');
 		$scope.disable = '';
-		$scope.date.setDate($scope.date.getDate()-1);
-	$scope.refreshGraph();		
+		$scope.prevSet = false;
+		$scope.date.setDate($scope.date.getDate());
+		$scope.refreshGraph();		
 	}
 	
 	$scope.nextDay = function(){
@@ -740,11 +797,27 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 		}
 	}
 	$scope.refreshGraph = function(){
+		console.log('test');
+		$scope.date.setDate($scope.date.getDate()-1);
 		//d3.select("$chart").remove();
 		$( "#chart" ).html('');
 		$scope.generateDayGraph();
+	}*/
+	$scope.commitDayEnd = function(){
+		var data = {
+           "quantity": 1,
+           "date": "2016-3-1"
+        };
+		$http.post('http://104.155.219.214:8080/usage/0x6015fb43e26226d80edc1c209ccd99ce2493497b', data, 
+            {headers: {
+                "Content-Type": "application/json"
+            }})
+		.then(function(response) {
+				var data = response.data;
+				console.log(response.data);
+		});
+		
 	}
-
 });
 
     

@@ -64,11 +64,11 @@
                     How you are doing this month 
                 </div>
 				<div class="item item-text-wrap row" style="margin-top:10px;border-top:0px;">
-					  <div class="col"><button class="button" ng-click="previousDay()"> <i class="icon ion-arrow-left-b disabled"></i></button></div>
-					  <div class="col col-67 col-center text-center"><h3>{{date | date:'EEEE, MMM dd, yyyy'}}</h3></div>
-					  <div class="col"><button class="button" ng-class="disable"  ng-click="nextDay()"><i class="icon ion-arrow-right-b"></i></button></div>
+					  <div class="col"><button class="button " ng-click="previousMonth()"> <i class="icon ion-arrow-left-b disabled"></i></button></div>
+					  <div class="col col-67 col-center text-center"><h3>{{month | date:'MMMM, yyyy'}}</h3></div>
+					  <div class="col"><button class="button" ng-class="disable"  ng-click="nextMonth()"><i class="icon ion-arrow-right-b"></i></button></div>
 					</div>
-                <div class="item item-text-wrap row" style="text-align:center;margin-top:10px;border-top:0px;margin-left:10px;">
+                <div class="item item-text-wrap row" style="text-align:center;margin-top:10px;border-top:0px;;">
 					
                     <canvas id="lineGraph" height="325px" width="325px"></canvas>
 					<!--canvas id="bar" class="chart chart-line" data="graph.data" options="graph.options" labels="graph.labels" series='graph.series' colours='graph.colours' height="350"></canvas-->
@@ -77,10 +77,33 @@
 			</div>
 		</ion-slide>
 
-        <ion-slide ion-slide-tab-label="Year" ng-controller="PowerYearCtrl">
-			<div class="graph-display">
-				 <canvas class="chart chart-base" chart-type="type" data="yearData" labels="yearlabels"></canvas>
-		    </div>
+        <ion-slide ion-slide-tab-label="Simulate" ng-controller="PowerYearCtrl">
+			
+			
+			
+			<div class="card" id="simulator-graph-container">
+		<div class="item item-divider">
+                    Commit Transactions
+                </div>
+                <div class="item item-text-wrap">
+                    
+					<div class="row" >
+						<div class="download-wrap">
+						  <div class="download">
+							<a href="#" class="button-download button-assertive" ng-click="commitDayEnd()">
+							  Commit
+							  <span class="icon-wrap">
+								<i class="icon-download"></i>
+							  </span>
+							</a>
+							<div class="meter">
+							  <span class="meter-progress"></span>
+							</div>
+						  </div>
+						</div>
+						<!--button id="reset">Reset</button-->
+					</div>
+				</div>
 		</ion-slide>
     </ion-slide-box>
 </ion-content>
