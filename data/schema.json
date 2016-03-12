@@ -1,0 +1,26 @@
+[
+{id:""
+name:
+state:
+city:
+country:
+transections:{energy:[{month:
+                       year:
+                       daily_values:[]
+                       usage:} ]
+               water:[]
+               fuel:[]}
+
+goals: { energy:[{month:
+                 year:
+                 pledged:
+                 actual:
+                 earned_coins:
+                 } ]
+         water:[]
+         fuel:[]
+       }
+
+
+},
+]
