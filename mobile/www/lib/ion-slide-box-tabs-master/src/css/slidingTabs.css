@@ -41,7 +41,7 @@ ion-slide:nth-child(2n) {
     transition: color .25s ease-in-out;
     position: relative;
     overflow: hidden;
-    border-bottom: 2px solid #388E3C;
+    border-bottom: 2px solid #FB8C00;
 }
 
 .slidingTabs ul li.tab-active {
@@ -51,7 +51,7 @@ ion-slide:nth-child(2n) {
 .slidingTabs ul li .ink {
     display: block;
     position: absolute;
-    background: rgba(129, 199, 132, 0.8);
+    background: rgba(255, 203, 130, 0.8);
     border-radius: 100%;
     transform: scale(0);
 }
@@ -71,7 +71,7 @@ ion-slide:nth-child(2n) {
 
 .slidingTabs .tab-indicator-wrapper .tab-indicator {
     height: 100%;
-    background-color: #388E3C;
+    background-color: #FB8C00;
     width: 68px;
     position: relative;
 }
