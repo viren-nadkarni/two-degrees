@@ -534,6 +534,17 @@ angular.module('starter.controllers', ['chart.js'])
 	}
 
 	$scope.generateDayGraph();
+    
+$( "#myBar" ).animate({
+                   "width": "+=50%"
+                }, {
+                    duration: 1000,
+                    complete: function() {
+                      $("#label").text("60%");
+                    }
+                });
+    
+    
 }).controller("PowerMonthCtrl",function($scope, $interval){
 	$scope.loadMonthGraph = function(){
 		$scope.graph = {};		
