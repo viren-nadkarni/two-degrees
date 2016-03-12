@@ -9,6 +9,13 @@ angular.module('starter.controllers', ['chart.js'])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
+  
+   $scope.lastMonthUtilization=180;
+   $scope.pricePerKwh = 5;
+   $scope.master = 95;
+   $scope.lastMonth = "February";
+   $scope.thisMonth = "March";
+   $scope.Math = window.Math;
   // Form data for the login modal
   $scope.loginData = {};
 

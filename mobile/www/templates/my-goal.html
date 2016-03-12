@@ -8,18 +8,42 @@
   <ion-content>
     <form ng-submit="setGoal()">
       <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Power</span>
-          <input type="text" ng-model="goalData.power">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Water</span>
-          <input type="text" ng-model="goalData.water">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Fuel</span>
-          <input type="text" ng-model="goalData.fuel">
-        </label>
+
+        
+      <div  ng-cloak="" class="sliderdemoVertical">
+        <md-content layout="row" layout-padding="">
+         
+          <div flex="" layout="column" layout-align="center center">
+            <md-slider-container ">
+              <md-input-container>
+              <div class="row">
+                <div class="col col-66" style="text-align:left">Last {{lastMonth}} Usage :</div>
+                <div class="col">{{lastMonthUtilization}} kWh</div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col col-66" style="text-align:left">Your power saving commitment for {{thisMonth}}:</div>
+                <div class="col"> {{lastMonthUtilization * master/100}} kWh</div>
+              </div>
+              <div class="row">
+                <div class="col col-66" style="text-align:left">You will earn :</div>
+                <div class="col">{{(lastMonthUtilization*(100-master)/100)*pricePerKwh}} Green Coins </div>
+              </div>
+
+              <!--input flex="" type="number" ng-model="master" aria-label="master" aria-controls="master-slider"-->
+              </md-input-container>
+              <md-slider flex="" ng-model="master" md-discrete="" aria-label="Master" md-vertical="" step="1" style="width:100%"></md-slider>
+              
+            </md-slider-container>
+
+          </div>
+        </md-content>
+      </div>
+
+        
+
+
+      
         <label class="item">
           <button class="button button-block button-positive" type="submit">Set Goal</button>
         </label>
