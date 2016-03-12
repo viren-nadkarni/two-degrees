@@ -449,7 +449,7 @@ color:#fff;
 }
 .x-navigation.x-navigation-horizontal {
   height: 50px;
-  background: #fff;
+  background: #080200;
 }
 .x-navigation.x-navigation-horizontal .xn-logo a {
   border-bottom: 0px;
@@ -774,7 +774,7 @@ color:#fff;
 .x-navigation.x-navigation-minimized > li.xn-logo > a:first-child {
   padding: 0px;
   width: 50px;
-  background-image: url("../img/logo-small.png");
+  background-image: url("../img/2degree_Logo.jpg");
 }
 .x-navigation.x-navigation-minimized .xn-search input {
   width: 30px;
@@ -7348,4 +7348,19 @@ width : 220px;
 }
 .set-color{
 	color:#FE970A;
+}
+
+.modal-title {
+    text-align: left;
+    padding: 3px;
+    font-family: monospace;
+}
+.modal-desc {
+        text-align: left;
+    padding: 3px;
+    font-family: monospace;
+    background: #90B3B3;
+    margin-bottom: 3px;
+    
+    border-radius: 3px;
 }

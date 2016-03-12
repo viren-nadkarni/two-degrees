@@ -201,9 +201,9 @@
 						<tbody>
 							<tr ng-repeat="transaction in transactions">
                                 
-                                <td><button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.hash}}</button></td>
-                                <td><button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.timestamp}}</button></td>
-                                <td><button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.value}}</button></td>
+                                <td><button style="font-size:15px;" class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.hash}}</button></td>
+                                <td><button  style="font-size:15px;" class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.timestamp}}</button></td>
+                                <td><button  style="font-size:15px;" class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.value}}</button></td>
                                 <td> <button class="btn btn-success btn-rounded" data-toggle="modal" data-target="#modal_{{transaction.hash}}"><span class="fa fa-check"></span>Verified</button> 
                                 
                                 <div class="modal" id="modal_{{transaction.hash}}" tabindex="-1" role="dialog" aria-labelledby="largeModalHead" aria-hidden="true">
@@ -217,62 +217,62 @@
                                         <div class="modal-body">
                                             
                                             <div class="row">
-                                                <div class="col-md-6"><h3>Block #:</h3></div>
-                                                <div class="col-md-6"><h3>{{transaction.blockNumber}}</h3></div>
+                                                <div class="col-md-4 modal-title"><h3>Block #:</h3></div>
+                                                <div class="col-md-8 modal-desc"><h3>{{transaction.blockNumber}}</h3></div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4 modal-title">
                                                 <h3>Time :</h3>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-8 modal-desc">
                                                 <h3>{{transaction.timestamp}}</h3>
                                                 </div>
                                             </div>  
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4 modal-title">
                                                 <h3>From:</h3>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-8 modal-desc">
                                                 <h3>{{transaction.from}}</h3>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4  modal-title">
                                                 <h3>To:</h3>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-8  modal-desc">
                                                 <h3>{{transaction.to}}</h3>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4  modal-title">
                                                 <h3>Daily Usage:</h3>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-8 modal-desc">
                                                 <h3>{{transaction.value}}</h3>
                                                 </div>
                                             </div>
                                              <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4 modal-title">
                                                 <h3>Gas Price:</h3>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-8 modal-desc">
                                                 <h3>{{transaction.gasPrice}}</h3>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4 modal-title">
                                                 <h3>Gas Used:</h3>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-8 modal-desc">
                                                <h3>{{transaction.gas}}</h3>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4 modal-title">
                                                 <h3>Tx Price:</h3>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-8 modal-desc ">
                                                <h3>{{transaction.gasPrice}}</h3>
                                                 </div>
                                             </div>

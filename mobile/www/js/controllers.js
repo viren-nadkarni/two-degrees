@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['chart.js'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, $ionicPopup) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, $rootScope) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -9,7 +9,9 @@ angular.module('starter.controllers', ['chart.js'])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-    
+   $scope.myGoal = function() {
+       $rootScope.$broadcast("opengoal");l
+   }
    $scope.lastMonthUtilization=180;
    $scope.pricePerKwh = 5;
    $scope.master = 95;
@@ -51,7 +53,11 @@ angular.module('starter.controllers', ['chart.js'])
 
 })
 
-.controller('SplashCtrl',function($scope, $ionicModal, $ionicPopup, $location, $http){
+.controller('SplashCtrl',function($scope, $ionicModal, $ionicPopup, $location, $http, $rootScope){
+    
+    $rootScope.$on('opengoal', function(){
+        $scope.myGoal();
+    });
     
   localStorage.setItem('isGoalSet', true);
    $scope.lastMonthUtilization=180;
@@ -74,6 +80,7 @@ angular.module('starter.controllers', ['chart.js'])
   // Triggered in the login modal to close it
   $scope.closeMyGoal = function() {
     $scope.myGoalModal.hide();
+    $location.url("/app/power");
   };
 
   // Open the login modal
@@ -113,7 +120,7 @@ angular.module('starter.controllers', ['chart.js'])
         localStorage.setItem('setGoal', '1');
         var myGoalCommitment = parseFloat($("#my-goal-kwh-commitment").html());
         //var tmp_percentage_committed = $("#tmp_percentage_committed").attr('value');
-        var tmp_percentage_committed = 100 - Math.floor((myGoalCommitment / $scope.lastMonthUtilization)*100);
+        var percentageCommitted = 100 - Math.floor((myGoalCommitment / $scope.lastMonthUtilization)*100);
 
       var data = {
            "targetUsage": myGoalCommitment,
@@ -128,8 +135,11 @@ angular.module('starter.controllers', ['chart.js'])
 
                 console.log(response);
                 localStorage.setItem('setGoal', '0');
-                $scope.goalCommittedSuccess = "You have pledged to utilise "+myGoalCommitment+" KWH which is "+tmp_percentage_committed+" % less than your utilization last year this month!";
+                $scope.goalCommittedSuccess = true; //"You have pledged to utilise <span class='large-font'>"+myGoalCommitment+"</span> KWH which is <span class='large-font'>"+tmp_percentage_committed+" %</span> less than your utilization last year this month!";
                 console.log($scope.goalCommittedSuccess);
+                $scope.myGoalCommitment = myGoalCommitment;
+                $scope.percentageCommitted = percentageCommitted;
+          
                 
                 
 //                if(!$scope.alertPopup) {

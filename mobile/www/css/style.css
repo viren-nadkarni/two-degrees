@@ -235,6 +235,7 @@
 }
 
 .my-goal-back-container button {
+
     font-size: 32px !important;
 }
 
@@ -296,12 +297,12 @@ md-content.layout-padding.layout-row {
     float: left;
     height: 100%;
     text-align: left;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
 }
 
 .setter .setter-slide-container {
-    margin-top: 95px;
+    margin-top: 65px;
     height: 200px;
 }
 
@@ -310,13 +311,16 @@ md-content.layout-padding.layout-row {
     font-size: 21px;
     font-weight: 600;
     color: #4A696E;
+    margin-top: 20px;
 }
 
 .setter .setter-savings-amount {
     font-size: 76px;
     text-align: center;
     margin-top: 20px;
-    color: #4A696E
+    color: #4A696E;
+    
+        
 }
 
 .setter .setter-savings-watts {
@@ -329,10 +333,25 @@ md-content.layout-padding.layout-row {
 
 .goal-button {
     height: 100px;
+    margin-top: 40px;
 }
 
 .goal-button button {
     font-weight: 600;
+
+}
+.goal-success {
+    color: #4A696E;
+    width: 100%;
+    float: left;
+    height: 100%;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-bottom: 10px;
 }
 
 .splash-image {
@@ -529,4 +548,8 @@ ion-view.pane {
   to {
     color: rgba(255, 255, 255, 0.5);
   }
+}
+
+.large-font {
+    font-size:23px;
 }

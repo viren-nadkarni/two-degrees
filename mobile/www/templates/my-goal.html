@@ -14,7 +14,7 @@
                         <div class="seperator-div"></div>
                         <div class="usage">
                             <div class="usage-label">Your Usage Last Year Same Month</div>
-                            <div class="usage-figures">{{lastMonthUtilization}} KWh</div>
+                            <div class="usage-figures">{{lastMonthUtilization}} kWh</div>
                         </div>
                         <div class="seperator-div"></div>
                         <div class="setter">
@@ -25,14 +25,15 @@
                             </div>
                             <div class="setter-savings-label">GREEN COINS</div>
                             <div class="setter-savings-amount" id="my-goal-green-coins">{{defaultPowerConsumption}}</div>
-                            <div class="setter-savings-watts"><span id="my-goal-kwh-commitment">{{master}}</span>&nbsp;KWH</div>
+                            <div class="setter-savings-watts"><span id="my-goal-kwh-commitment">{{master}}</span>&nbsp;kWh</div>
                             <input type="hidden" id="tmp_percentage_committed" value="{{master}}">
                         </div>
                       
                         <div class="goal-button" ng-hide="goalCommittedSuccess" ><button class="button button-block button-assertive" type="submit">COMMIT GOAL</button></div>
                         <div ng-show="goalCommittedSuccess">
-                            <div class="goal-success">{{goalCommittedSuccess}}</div>
-                            <div class="goal-button-home"  ><button class="button button-block button-balanced" type="submit">HOME</button></div>
+                            <div class="goal-success">You have pledged to utilise <span class='large-font'>{{myGoalCommitment}}</span> kWh which is <span class='large-font'>{{percentageCommitted}}%</span> less than your utilization last year this month!
+                                </div>
+                            <div class="goal-button-home"  ><button class="button button-block button-balanced" ng-click="closeMyGoal()">HOME</button></div>
                         </div>
                   </div>
               </md-content>
