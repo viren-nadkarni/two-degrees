@@ -220,14 +220,21 @@
   background-color: #66BB6A;
 }
 
+#myProgress i {
+    font-size: 30px;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+}
+
 .progress-container #label {
   text-align: center;
   line-height: 30px;
   color: #fff;
 }
-<<<<<<< .mine
-=======
->>>>>>> .theirs.my-goal-back-container button {
+
+.my-goal-back-container button {
     font-size: 32px !important;
 }
 
@@ -335,9 +342,11 @@ md-content.layout-padding.layout-row {
     padding-top: 45px;
 
 }
-.splash-green-coins {
-    font-size: 24px;
+
+.splash-image img {
+    width: 200px;
 }
+
 .splash-green-coins {
     font-size: 76px;
     text-align: center;
@@ -349,6 +358,7 @@ md-content.layout-padding.layout-row {
     font-size: 21px;
     font-weight: 600;
     color: #4A696E;
+    margin-top: 20px;
 }
 
 ion-view.pane {
@@ -370,24 +380,27 @@ ion-view.pane {
     font-weight: 600;
 }
 
-.button-custom,
-[class*='button-'] {
+.title.title-left.header-item {
+    left: 150px !important;
+}
+
+#simulator-graph-container .button-custom,
+[class*='button-custom-'] {
   background: #fff;
   display: inline-block;
   padding: 1rem 2rem;
   color: #232323;
-  font: 200 1.5rem "Source Sans Pro";
   text-transform: lowercase;
   text-decoration: none;
   text-align: left;
   transition: 0.5s linear all;
 }
-.button-custom:hover,
-[class*='button-']:hover {
+#simulator-graph-container .button-custom:hover,
+[class*='button-custom-']:hover {
   background: #50d9ff;
 }
 
-.download-wrap {
+#simulator-graph-container .download-wrap {
   perspective: 80rem;
   perspective-origin: 50% 50% 0;
   width: 15rem;
@@ -395,7 +408,7 @@ ion-view.pane {
   margin: 0 auto;
 }
 
-.download {
+#simulator-graph-container .download {
   position: relative;
   width: 15rem;
   height: 4rem;
@@ -404,14 +417,14 @@ ion-view.pane {
   transform: rotateX(0deg);
   transition: 0.2s linear all;
 }
-.download.is-active {
+#simulator-graph-container .download.is-active {
   transform: rotateX(90deg) translateZ(2rem);
 }
-.download.is-active .meter-progress {
+#simulator-graph-container .download.is-active .meter-progress {
   right: 0%;
 }
 
-.button-download,
+#simulator-graph-container .button-download,
 .meter {
   position: relative;
   width: 15rem;
@@ -423,32 +436,32 @@ ion-view.pane {
   transform-origin: top center;
 }
 
-.meter {
+#simulator-graph-container .meter {
   background: #C41564;
   overflow: hidden;
   transform: rotateX(270deg);
 }
-.meter:before, .meter:after {
+#simulator-graph-container .meter:before, .meter:after {
   display: block;
   text-align: center;
   color: rgba(255, 255, 255, 0.5);
 }
-.meter:before {
+#simulator-graph-container .meter:before {
   content: 'committing...';
   animation: white-pulse 1s infinite alternate;
 }
-.meter:after {
+#simulator-graph-container .meter:after {
   content: 'done!';
   display: none;
   color: #fff;
 }
-.meter.is-done:before {
+#simulator-graph-container .meter.is-done:before {
   display: none;
 }
-.meter.is-done:after {
+#simulator-graph-container .meter.is-done:after {
   display: block;
 }
-.meter .meter-progress {
+#simulator-graph-container .meter .meter-progress {
   display: block;
   width: 100%;
   position: absolute;
@@ -459,7 +472,7 @@ ion-view.pane {
   transition: 1s linear all;
 }
 
-.icon-wrap {
+#simulator-graph-container .icon-wrap {
   position: absolute;
   right: 0.5rem;
   top: 0;
@@ -469,7 +482,7 @@ ion-view.pane {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.icon-download {
+#simulator-graph-container .icon-download {
   position: relative;
   display: block;
   width: 2.5rem;
@@ -478,20 +491,20 @@ ion-view.pane {
   border: solid 0.5rem #232323;
   border-top: none;
 }
-.icon-download:before, .icon-download:after {
+#simulator-graph-container .icon-download:before, .icon-download:after {
   content: '';
   display: block;
   position: absolute;
   animation: icon-bounce .5s infinite alternate;
 }
-.icon-download:before {
+#simulator-graph-container .icon-download:before {
   left: 0.5rem;
   top: -0.5rem;
   width: 0.5rem;
   height: 0.5rem;
   background: #232323;
 }
-.icon-download:after {
+#simulator-graph-container .icon-download:after {
   left: 0.25rem;
   top: -0.125rem;
   width: 0;
@@ -517,4 +530,3 @@ ion-view.pane {
     color: rgba(255, 255, 255, 0.5);
   }
 }
-

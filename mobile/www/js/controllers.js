@@ -163,10 +163,15 @@ angular.module('starter.controllers', ['chart.js'])
 	$( "#myBar" ).animate({
                    "width": "+=50%"
                 }, {
-                    duration: 1000,
+                    duration: 2000,
                     complete: function() {
                       $("#label").text("60%");
                     }
+                });
+    $( "#myProgress i").animate({
+                   "left": "+=52%"
+                }, {
+                    duration: 2000
                 });
 				
 				
