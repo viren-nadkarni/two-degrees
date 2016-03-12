@@ -32,7 +32,6 @@ with open('input_data.txt') as f:
         for pledge in pledges:
 
             if fuzz.ratio(row['country'], pledge['country']) > 30:
-                row['country'] =pledge['country']
                 row['target_year'] = pledge['target_year']
                 row['pledge'] = pledge['pledge']
                 row['compared_to'] =  pledge['compared_to']
