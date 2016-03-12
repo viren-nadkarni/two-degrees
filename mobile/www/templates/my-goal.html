@@ -25,7 +25,8 @@
                             </div>
                             <div class="setter-savings-label">GREEN COINS</div>
                             <div class="setter-savings-amount">{{(lastMonthUtilization*(100-master)/100)*pricePerKwh}}</div>
-                            <div class="setter-savings-watts">{{(lastMonthUtilization * master)/100}} KWH</div>
+                            <div class="setter-savings-watts"><span id="tmp_power_commitment">{{(lastMonthUtilization * master)/100}}</span>&nbsp;KWH</div>
+                            <input type="hidden" id="tmp_percentage_committed" value="{{master}}">
                         </div>
                         <div class="goal-button"><button class="button button-block button-assertive" type="submit">COMMIT GOAL</button></div>
                   </div>
