@@ -56,7 +56,10 @@ angular.module('starter.controllers', ['chart.js'])
   localStorage.setItem('isGoalSet', true);
    $scope.lastMonthUtilization=180;
    $scope.pricePerKwh = 5;
-   $scope.master = 95;
+   $scope.master = $scope.lastMonthUtilization * 95/100;
+   $scope.defaultPowerConsumption = ($scope.lastMonthUtilization - $scope.master) * 5; 
+    $scope.defaultCoin = ($scope.lastMonthUtilization - $scope.master) ; 
+   //$('#my-goal-green-coins').html(($scope.lastMonthUtilization - $scope.master) * 5);
    $scope.lastMonth = "February";
    $scope.thisMonth = "March";
    $scope.Math = window.Math;
@@ -74,8 +77,32 @@ angular.module('starter.controllers', ['chart.js'])
   };
 
   // Open the login modal
-  $scope.myGoal = function() {
-    console.log("inside myGoal");
+  $scope.myGoal = function() {  
+
+        $(".knob").knob({
+            /*change : function (value) {
+                //console.log("change : " + value);
+            },
+            release : function (value) {
+                console.log("release : " + value);
+            },
+            cancel : function () {
+                console.log("cancel : " + this.value);
+            },*/
+            draw : function () {
+            },
+            'change' : function (v) {
+                //console.log(v); 
+                $('#my-goal-green-coins').html(($scope.lastMonthUtilization - Math.floor(v)) * 5);
+                $('#my-goal-kwh-commitment').html(Math.floor(v));
+            },
+            'release' : function (v) { 
+                console.log(v); 
+            }
+
+
+
+    }); 
     $scope.myGoalModal.show();
   };
   
@@ -84,8 +111,9 @@ angular.module('starter.controllers', ['chart.js'])
       
     if(localStorage.getItem('setGoal') == '0') {
         localStorage.setItem('setGoal', '1');
-        var myGoalCommitment = parseFloat($("#tmp_power_commitment").html());
-        var tmp_percentage_committed = $("#tmp_percentage_committed").attr('value');
+        var myGoalCommitment = parseFloat($("#my-goal-kwh-commitment").html());
+        //var tmp_percentage_committed = $("#tmp_percentage_committed").attr('value');
+        var tmp_percentage_committed = 100 - Math.floor((myGoalCommitment / $scope.lastMonthUtilization)*100);
 
       var data = {
            "targetUsage": myGoalCommitment,
@@ -97,21 +125,24 @@ angular.module('starter.controllers', ['chart.js'])
                 "Content-Type": "application/json"
             }})
           .then(function(response) {
+
                 console.log(response);
                 localStorage.setItem('setGoal', '0');
-                if(!$scope.alertPopup) {
-                   $scope.alertPopup = $ionicPopup.alert({
-                     buttons: [{text: 'OK',
-                                type: 'button-assertive'}],
-                     title: 'Your goal for March is set!',
-                     template: 'You have pledged to utilize '+tmp_percentage_committed+'% power as compared to last month Great going!'
-                   });
-                   $scope.alertPopup.then(function(res) {
-                     $scope.closeMyGoal();
-                     $location.url('/app/power');
-                     $scope.alertPopup = null;
-                   });
-                }
+                $scope.goalCommittedSuccess = "You have pledged to utilise "+myGoalCommitment+" KWH which is "+tmp_percentage_committed+" % less than your utilization last year this month!";
+                console.log($scope.goalCommittedSuccess);
+                
+                
+//                if(!$scope.alertPopup) {
+//                   $scope.alertPopup = $ionicPopup.alert({
+//                     title: 'Your goal for March is set!',
+//                     template: 'You have pledged to utilize '+tmp_percentage_committed+'% power as compared to last month Great going!'
+//                   });
+//                   $scope.alertPopup.then(function(res) {
+//                     $scope.closeMyGoal();
+//                     $location.url('/app/power');
+//                     $scope.alertPopup = null;
+//                   });
+//                }
             }, function(response) {
                 console.log(response);
             });
@@ -805,7 +836,7 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 	}*/
 	$scope.commitDayEnd = function(){
 		var data = {
-           "quantity": 1,
+           "quantity": Math.floor((Math.random() * 6) + 1),
            "date": "2016-3-1"
         };
 		$http.post('http://104.155.219.214:8080/usage/0x6015fb43e26226d80edc1c209ccd99ce2493497b', data, 
