@@ -101,6 +101,8 @@ angular.module('starter.controllers', ['chart.js'])
                 localStorage.setItem('setGoal', '0');
                 if(!$scope.alertPopup) {
                    $scope.alertPopup = $ionicPopup.alert({
+                     buttons: [{text: 'OK',
+                                type: 'button-assertive'}],
                      title: 'Your goal for March is set!',
                      template: 'You have pledged to utilize '+tmp_percentage_committed+'% power as compared to last month Great going!'
                    });

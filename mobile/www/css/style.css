@@ -326,3 +326,45 @@ md-content.layout-padding.layout-row {
 .goal-button button {
     font-weight: 600;
 }
+
+.splash-image {
+    text-align: center;
+    height: 300px;
+    vertical-align: middle;
+    padding-top: 45px;
+
+}
+.splash-green-coins {
+    font-size: 24px;
+}
+.splash-green-coins {
+    font-size: 76px;
+    text-align: center;
+    margin-top: 20px;
+    color: #4A696E
+}
+.splash-green-coins-title {
+    text-align: center;
+    font-size: 21px;
+    font-weight: 600;
+    color: #4A696E;
+}
+
+ion-view.pane {
+    background-color: #EEEEEE;
+}
+
+.splash-goal-container {
+    position: fixed;
+    bottom: 25px;
+    width: 100%;
+    border-top: 2px solid #4A696E;
+    padding-top: 25px;
+}
+
+.splash-goal-message {
+    color: #4A696E;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+}

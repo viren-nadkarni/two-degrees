@@ -87,6 +87,44 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive','
 //    });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/power');
-});
+})
+
+.directive('countUp', ['$compile',function($compile,$timeout) {
+   return {
+       restrict: 'E',
+       replace: false,
+       scope: {
+           countTo: "=countTo",
+           interval: '=interval',
+           incrementBy: '=incrementBy'
+       },
+       controller: ['$scope', '$element', '$attrs', '$timeout', function ($scope, $element, $attrs, $timeout) {
+           $scope.millis = 0;
+           if ($element.html().trim().length === 0) {
+               $element.append($compile('<span>{{millis}}</span>')($scope));
+           } else {
+               $element.append($compile($element.contents())($scope));
+           }
+
+           var i=0;
+           function timeloop () {
+               setTimeout(function () {
+                    if(($scope.countTo-$scope.millis)>= $scope.incrementBy){
+                        $scope.millis = $scope.incrementBy + $scope.millis;
+                        i = $scope.incrementBy + i;
+                    }else{
+                        $scope.millis ++;
+                        i++;
+                    }
+                   $scope.$digest();
+                   
+                   if (i<$scope.countTo) {
+                       timeloop();
+                   }
+               }, $scope.interval)
+           }
+           timeloop();
+       }]
+   }}]);
 
 
