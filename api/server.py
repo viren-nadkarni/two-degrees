@@ -3,8 +3,8 @@ from flask import Flask, jsonify
 import json
 from flask.ext.cors import CORS
 from pymongo import MongoClient
-from bson import BSON
 from bson import json_util
+import operator
 
 
 app = Flask(__name__)
@@ -50,14 +50,38 @@ def get_month(userid,year,month):
             return json.dumps(item)
     return {}
 
+@app.route('/topscore', methods=['GET'])
+def topscore():
+    users=collection.find()
+    arr = []
+    for item in users:
+        usr = {}
+        usr['state'] = item['state']
+        sum_of_cc=0
+        for month in item['transactions']['energy']:
+            sum_of_cc += month['earned_coins']
 
+        usr['balance'] = round(sum_of_cc,2)
+        usr['wallet_id'] = item['id']
+        usr['name'] = item['name']
+        print usr['wallet_id']
+        arr.append(usr)
 
+    coll=db.dk
+    dk = coll.find_one()
+    usr={}
+    usr['state'] = dk['state']
+    sum_of_cc=0
+    for month in dk['transactions']['energy']:
+        sum_of_cc += month['earned_coins']
+    print sum_of_cc
+    usr['balance'] = sum_of_cc
+    usr['wallet_id'] = dk['id']
+    usr['name'] = dk['name']
 
-
-
-
-
-
+    arr.append(usr)
+    arr.sort(key=operator.itemgetter('balance'),reverse=True)
+    return json.dumps(arr)
 
 
 
@@ -100,16 +124,6 @@ def app_get_day(userid,year,month,day):
         if (int(item['year']) == int(year) and int(item['month']) == int(month)):
             return json.dumps(item['daily_values'][int(day)-1])
     return {}
-
-
-    #return json_util.dumps(user, sort_keys=True, indent=4, default=json_util.default)
-    #return json_util.dumps(user, sort_keys=True, indent=4, default=json_util.default)
-
-
-
-
-
-
 
 
 

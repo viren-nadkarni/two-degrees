@@ -6,6 +6,7 @@
     </div>
   </ion-header-bar>
   <ion-content>
+
     <form ng-submit="setGoal()">
       <div class="list">
 
@@ -14,7 +15,7 @@
         <md-content layout="row" layout-padding="">
          
           <div flex="" layout="column" layout-align="center center">
-            <md-slider-container ">
+            <md-slider-container >
               <md-input-container>
               <div class="row">
                 <div class="col col-66" style="text-align:left">Last {{lastMonth}} Usage :</div>
@@ -23,13 +24,13 @@
               <hr/>
               <div class="row">
                 <div class="col col-66" style="text-align:left">Your power saving commitment for {{thisMonth}}:</div>
-                <div class="col"> {{lastMonthUtilization * master/100}} kWh</div>
+                <div class="col" ><span id="tmp_power_commitment">{{(lastMonthUtilization * master)/100}}</span> kWh</div>
               </div>
               <div class="row">
                 <div class="col col-66" style="text-align:left">You will earn :</div>
                 <div class="col">{{(lastMonthUtilization*(100-master)/100)*pricePerKwh}} Green Coins </div>
               </div>
-
+              <input type="hidden" id="tmp_percentage_committed" value="{{master}}">
               <!--input flex="" type="number" ng-model="master" aria-label="master" aria-controls="master-slider"-->
               </md-input-container>
               <md-slider flex="" ng-model="master" md-discrete="" aria-label="Master" md-vertical="" step="1" style="width:100%"></md-slider>

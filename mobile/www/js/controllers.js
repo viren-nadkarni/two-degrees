@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['chart.js'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, $ionicPopup) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -16,8 +16,9 @@ angular.module('starter.controllers', ['chart.js'])
    $scope.lastMonth = "February";
    $scope.thisMonth = "March";
    $scope.Math = window.Math;
-  // Form data for the login modal
-  $scope.loginData = {};
+   
+   // Form data for the login modal
+   $scope.loginData = {};
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -52,7 +53,42 @@ angular.module('starter.controllers', ['chart.js'])
   $scope.myGoal = function() {
     $scope.myGoalModal.show();
   };
+  
+  $scope.setGoal = function() {
+    console.log("11111");
+    var myGoalCommitment = parseFloat($("#tmp_power_commitment").html());
+    var tmp_percentage_committed = $("#tmp_percentage_committed").attr('value');
     
+    if(!$scope.alertPopup) {
+       $scope.alertPopup = $ionicPopup.alert({
+         title: 'Your goal for March is set!',
+         template: 'You have pledged to utilize '+tmp_percentage_committed+'% power as compared to last month Great going!'
+       });
+       $scope.alertPopup.then(function(res) {
+         $scope.closeMyGoal();
+         $scope.alertPopup = null;
+       });
+    }
+    
+    /*
+    
+    var url="http://localhost";
+    var data = {"value": myGoalCommitment};
+    $http.post(url, data, [config])
+    .then(function(response) {
+      console.log(response);
+    }, function(response) {
+      console.log(response);
+    });
+*/
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
+    /*
+    $timeout(function() {
+      $scope.closeMyGoal();
+    }, 1000);
+    */
+  };
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
@@ -64,33 +100,8 @@ angular.module('starter.controllers', ['chart.js'])
       $scope.closeLogin();
     }, 1000);
   };
-    
-  $scope.setGoal = function() {
-    console.log('Setting Goal', $scope.goalData);
 
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeMyGoal();
-    }, 1000);
-  };
-  
 })
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-
-
-
 
 .controller('PowerCtrl',function($scope, $interval){
        
