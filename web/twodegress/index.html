@@ -13,6 +13,8 @@
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-white.css"/>
         <link rel="stylesheet" type="text/css" href="css/angularCharts/angular-chart.css"/>
+        <link rel="stylesheet" type="text/css" href="css/jquery/jquery-ui.min.css"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
         <!-- EOF CSS INCLUDE -->
         <style>
             .centerBlock {
@@ -45,7 +47,7 @@
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="#/">Code Miners</a>
+                        <a href="#/"></a>
                         <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
@@ -68,7 +70,7 @@
                         <a href="#/"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>                        
                     </li>
                     <li>
-                        <a href="#globalImpact"><span class="glyphicon glyphicon-globe"></span> <span class="xn-text">Global Impact</span></a>                        
+                        <a href="map.html"><span class="glyphicon glyphicon-globe"></span> <span class="xn-text">Global Impact</span></a>                        
                     </li> 
                    
                    
@@ -143,8 +145,9 @@
     <!-- START SCRIPTS -->
         <!-- START PLUGINS -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
         <!-- END PLUGINS -->
 
         <!-- START THIS PAGE PLUGINS-->        
@@ -158,14 +161,15 @@
         <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
         <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
         <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script> 
-<script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-in-mill-en.js'></script>   			
+        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-in-mill-en.js'></script>   			
         <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>                
         <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>                 
         
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
         <script type="text/javascript" src="js/plugins/blockui/jquery.blockUI.js"></script>
-        
+        <script type="text/javascript" src="js/plugins/loader/loader.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <!-- END THIS PAGE PLUGINS-->        
 
         <!-- START TEMPLATE -->
@@ -186,6 +190,7 @@
 		<!-- START CONTROLLERS -->
         <script src="scripts/controllers/DashboardController.js"></script>
         <script src="scripts/controllers/CustomerController.js"></script>
+        <script src="scripts/controllers/globalImpactController.js"></script>
         <!-- END CONTROLLERS -->
 		<!-- START SERVICES -->
 		<script src="scripts/services/Configuration.js"></script>

@@ -122,7 +122,7 @@ data.usageStats = {
         url: 'http://104.197.9.200/topscore'
         }).then(function successCallback(response) {
            // console.log(response);
-            $scope.customerData = response.data;
+            $scope.customerData = response.data.slice(0,2);
             $.unblockUI(); 
         }, function errorCallback(response) {
             $scope.customerData = {};

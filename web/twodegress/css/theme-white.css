@@ -82,7 +82,7 @@ body {
   float: left;
   min-height: 100%;
   position: relative;
-  background: #1e293d;
+  /*background: #1e293d;*/
   /* SIDEBAR */
   /* END SIDEBAR */
   /* CONTENT */
@@ -7335,6 +7335,8 @@ li.ext_zip {
 }
 .x-navigation-minimized .xn-logo{
 display:none;
+height : 50px;
+width : 220px;    
 }
 
 

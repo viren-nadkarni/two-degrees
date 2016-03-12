@@ -72,10 +72,19 @@ def topscore():
     usr={}
     usr['state'] = dk['state']
     sum_of_cc=0
-    for month in dk['transactions']['energy']:
-        sum_of_cc += month['earned_coins']
-    print sum_of_cc
-    usr['balance'] = sum_of_cc
+    import requests
+    r = requests.get('http://viren1:8080/stats/0x6015fb43e26226d80edc1c209ccd99ce2493497b')
+    resp = r.json()
+    print resp
+    print type(resp)
+    usr['balance'] = resp['carboncoinBalance']
+    print resp['carboncoinBalance']
+
+
+    # for month in dk['transactions']['energy']:
+    #     sum_of_cc += month['earned_coins']
+    # print sum_of_cc
+    # usr['balance'] = sum_of_cc
     usr['wallet_id'] = dk['id']
     usr['name'] = dk['name']
 
