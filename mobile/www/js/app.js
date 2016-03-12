@@ -4,7 +4,8 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.service', 'starter.directive','chart.js'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,7 +21,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, webSocketProvider) {
+  webSocketProvider.setWebSocketURL('ws://gol05195.persistent.co.in:3000/sockjs/websocket');
+  //webSocketProvider.setWebSocketURL('ws://10.244.25.63:8080/test');
+  $ionicConfigProvider.tabs.position('bottom');
   $stateProvider
 
   .state('app', {
@@ -30,43 +34,46 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: "/search",
+  .state('app.power', {
+    url: "/power",
     views: {
-      'tab-search': {
-        templateUrl: "templates/search.html"
+      'tab-power': {
+        templateUrl: "templates/power.html"
+        //contoller : 'PowerCtrl'
       }
     }
   })
 
-  .state('app.browse', {
-    url: "/browse",
+  .state('app.water', {
+    url: "/water",
     views: {
-      'tab-browse': {
-        templateUrl: "templates/browse.html"
+      'tab-water': {
+        templateUrl: "templates/water.html"
       }
     }
   })
 
-  .state('app.playlists', {
-    url: "/playlists",
+  .state('app.fuel', {
+    url: "/fuel",
     views: {
-      'tab-playlists': {
-        templateUrl: "templates/playlists.html",
+      'tab-fuel': {
+        templateUrl: "templates/fuel.html",
         controller: 'PlaylistsCtrl'
       }
     }
   })
 
-    .state('app.single', {
-      url: "/playlists/:playlistId",
-      views: {
-        'tab-playlists': {
-          templateUrl: "templates/playlist.html",
-          controller: 'PlaylistCtrl'
-        }
-      }
-    });
+//    .state('app.single', {
+//      url: "/playlists/:playlistId",
+//      views: {
+//        'tab-playlists': {
+//          templateUrl: "templates/playlist.html",
+//          controller: 'PlaylistCtrl'
+//        }
+//      }
+//    });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/power');
 });
+
+

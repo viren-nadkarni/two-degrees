@@ -1,0 +1,29 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">My Goal</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeMyGoal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="setGoal()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Power</span>
+          <input type="text" ng-model="goalData.power">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Water</span>
+          <input type="text" ng-model="goalData.water">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Fuel</span>
+          <input type="text" ng-model="goalData.fuel">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Set Goal</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>
