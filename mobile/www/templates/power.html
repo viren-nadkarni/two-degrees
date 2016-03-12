@@ -1,7 +1,9 @@
+
 <ion-view view-title="Power" >
 <ion-content >
-    <ion-slide-box slide-tabs-scrollable="false" show-pager="false" ion-slide-tabs>
-        <ion-slide ion-slide-tab-label="Live" ng-controller="PowerCtrl">
+    <ion-slide-box slide-tabs-scrollable="false" show-pager="false"  ion-slide-tabs>
+
+        <ion-slide ion-slide-tab-label="Live"  ng-controller="PowerCtrl">
 <!--
             <div class="card" >
                 <div class="item item-divider">
@@ -28,24 +30,26 @@
             </div>
             
         </ion-slide>
-        <!--ion-slide ion-slide-tab-label="Day">
-            <div class="row">
-              <div class="col"><button class="button "> <i class="icon ion-arrow-left-b"></i></button></div>
-              <div class="col col-67 col-center text-center"><h5>Friday, March 10, 2016</h5></div>
-              <div class="col"><button class="button  "><i class="icon ion-arrow-right-b"></i></button></div>
-            </div>
-            <div ng-controller="powerPolarChartCtrl">
-                <canvas id="base" class="chart-base" chart-type="type" chart-data="data" chart-labels="labels"
-                        chart-legend="false">
-                </canvas> 
-            </div>
-        
-        </ion-slide-->
+       
 
-        <ion-slide ion-slide-tab-label="Day" ng-controller="DayCtrl">
-			<div id="chart"></div>
+         <ion-slide ion-slide-tab-label="Day" >
+		
+		<div class="card" id="day-graph-container">
+		<div class="item item-divider">
+                    Today's Consumption 
+                </div>
+                <div class="item item-text-wrap">
+                    
+					<div class="row">
+					  <div class="col"><button class="button" ng-click="previousDay()"> <i class="icon ion-arrow-left-b disabled"></i></button></div>
+					  <div class="col col-67 col-center text-center"><h3>{{date | date:'EEEE, MMM dd, yyyy'}}</h3></div>
+					  <div class="col"><button class="button" ng-class="disable"  ng-click="nextDay()"><i class="icon ion-arrow-right-b"></i></button></div>
+					</div>
+			<div id="chart" style="text-align: center;"></div>
+                </div>
+		</div>
 		</ion-slide>
-        <ion-slide ion-slide-tab-label="Month"  ng-controller="GraphCtrl">
+        <ion-slide ion-slide-tab-label="Month" ng-controller="PowerMonthCtrl">
 		<div>
 			<canvas id="bar" class="chart chart-line" data="graph.data" options="graph.options" labels="graph.labels" series='graph.series' colours='graph.colors' height="350"></canvas>
 			</div>
