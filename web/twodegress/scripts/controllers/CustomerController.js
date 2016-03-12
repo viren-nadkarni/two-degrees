@@ -114,9 +114,9 @@ app.controller('CustomerController', ['$scope','$http', '$rootScope','customerSe
     });
                                         
     customerService.getContract(function(httpcode,data){
-        console.log(data);
-        console.log("zZZZ")
-        console.log(data.contractBytecode.Carboncoin.info.source);
+     //   console.log(data);
+     //   console.log("zZZZ")
+     //   console.log(data.contractBytecode.Carboncoin.info.source);
         $scope.contract = data;
         $.unblockUI();
     },function(httpcode,data){
