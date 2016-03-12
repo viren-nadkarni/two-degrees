@@ -7,7 +7,7 @@
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive','chart.js', 'ngMaterial'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $location) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,15 +18,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive','
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+      
+    $location.url('/splash');  
+//      var isGoalSet = localStorage.getItem('isGoalSet');
+//      console.log(isGoalSet);
+//      if (!isGoalSet || isGoalSet == null || isGoalSet == false) {
+//        $location.url('/splash');
+//      }
+    
   });
+    
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
-  //webSocketProvider.setWebSocketURL('ws://gol05195.persistent.co.in:3000/sockjs/websocket');
-  //webSocketProvider.setWebSocketURL('ws://10.244.25.63:8080/test');
   $ionicConfigProvider.tabs.position('bottom');
-  $stateProvider
 
+  $stateProvider
+    .state('splash', {
+      url: '/splash',
+      templateUrl: 'templates/splash.html',
+      //controller: 'SplashCtrl'
+  })
+  
   .state('app', {
     url: "/app",
     abstract: true,

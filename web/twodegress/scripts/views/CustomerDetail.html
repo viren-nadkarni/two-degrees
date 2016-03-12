@@ -8,17 +8,17 @@
 
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap" style="height: 700px;">
-	<div class="row">
-		<div class="col-md-3">
+	<div class="row row-eq-height">
+        <div class="col-md-4">
 
-			<div class="panel panel-default">
-				<div class="panel-body profile" style="">
+			<div class="panel panel-default" id="profilePanel">
+				<div class="panel-body profile" style="" >
 					<div class="profile-image">
-						<img src="assets/images/users/user-default.png" alt="{{user.fullname}}" />
+						<img src="assets/images/users/user-default.png" alt="{{customer.name}}" />
 					</div>
 					<div class="profile-data">
-						<div class="profile-data-name" style="color: #000;">{{customer.name}}</div>
-						<div class="profile-data-title" style="color: #000;">{{customer.state}}</div>
+						<div class="profile-data-name" style="color: #000;">Durgadas Kamath</div>
+						<div class="profile-data-title" style="color: #000;">Goa</div>
 					</div>
 
 				</div>
@@ -37,9 +37,8 @@
 			</div>
 
 		</div>
-
 		<div class="col-md-4">
-			<div class="panel">
+			<div class="panel" id="chartPanel">
 				<div class="panel-heading">
 					<h4>Monthly Goal Tracking</h4>
 				</div>
@@ -53,19 +52,37 @@
 
 
 		</div>
-		<div class="col-md-5">
-			<div class="panel">
+		<div class="col-md-4">
+			<div class="panel" id="rewardPanel">
 				<div class="panel-heading">
 					<h4>Rewards</h4>
-                    <a href="#" class="tile tile-default">
-                                577
+                    <a id="greencoinBalance" href="#/" class="tile tile-default">
+                                {{greencoinBalance}}
                     <p>Green Coins</p>                            
-                    <div class="informer informer-danger dir-tr"><span class="fa fa-caret-up"></span></div>
+                    <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
                     </a>
-                    <a href="#" class="tile tile-default">
-                       Pro
-                    <p>Level</p>                            
-                    <div class="informer informer-danger dir-tr"><span class="fa fa-caret-up"></span></div>
+                    <a href="#/customerDetail/{{customerId}}" class="tile tile-default messages-img">
+                       <div class="row">
+                           <div class="col-md-4">
+                                <div class="user">
+                                    <img src="assets/images/badges/badge1.png" alt="Nadia Ali" class="img-responsive center-block">
+                                </div>
+                               <!--//Environment Friendly-->
+                            </div>
+                           <div class="col-md-4">
+                                <div class="user">
+                                    <img src="assets/images/badges/badge2.png" alt="Nadia Ali" class="img-responsive center-block">
+                                </div>
+                              <!-- Saver Boost-->
+                           </div>
+                           <div class="col-md-4">
+                                <div class="user">
+                                    <img src="assets/images/badges/badge3.png" alt="Nadia Ali" class="img-responsive center-block">
+                                </div>
+                               <!--Experience-->
+                           </div>
+                        </div> 
+                    <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
                     </a>
 				</div>
                 
@@ -75,7 +92,85 @@
 			</div>
 		</div>
 
+
 	</div>
+    <div class="row">
+        
+        <div class="col-lg-4">
+            <div class="panel panel-default" id="contractPanel">
+
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Contract Address </h3> 
+                    </div>
+                    <div class="panel-body">
+                        <button class="btn btn-info btn-block" data-toggle="modal" data-target="#modal_{{contract.contractAddress}}">{{contract.contractAddress}}</button>
+                    </div>
+                
+                    <div class="modal" id="modal_{{contract.contractAddress}}" tabindex="-1" role="dialog" aria-labelledby="largeModalHead" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close btn-success btn-rounded" data-dismiss="modal"><span aria-hidden="true"><span class="fa fa-check"></span>Verified</button>
+                                            <h4 class="modal-title" id="largeModalHead">Contract # : {{contract.contractAddress}}</h4>
+                                           
+                                        </div>
+                                        <div class="modal-body">
+                                                <pre>
+                                                {{contract.contractBytecode.Carboncoin.info.source}}
+                                                </pre>
+                                                
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                        
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                    
+
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="panel panel-default" id="committmentPanel">
+
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Commitment </h3> 
+                    </div>
+                    <div class="panel-body">
+                        <div class="progress">
+                                        <div class="progress-bar progress-bar-danger" style="width: 60%">
+                                            60% (Utilized)
+                                        </div>
+                                        
+                                        <div class="progress-bar progress-bar-success" style="width: 40%">
+                                            40% (Remaining)
+                                        </div>
+                                    </div>
+                    </div>
+
+            </div>
+        </div>
+        
+        <div class="col-md-4" >
+            <div class="panel panel-default" id="currentEarningPanel">
+
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Current Earnings </h3> 
+                    </div>
+                    <div class="panel-body">
+                        12233123
+                    </div>
+                    
+
+            </div>
+        </div>
+    
+    </div>
 	<div class="row">
 		<div class="col-md-12">
 
@@ -83,30 +178,75 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">Transactions Data</h3>
 					<ul class="panel-controls">
-						<li><a href="#" class="panel-collapse"><span
+						<!--<li><a href="#" class="panel-collapse"><span
 								class="fa fa-angle-down"></span></a></li>
 						<li><a href="#" class="panel-refresh"><span
 								class="fa fa-refresh"></span></a></li>
 						<li><a href="#" class="panel-remove"><span
-								class="fa fa-times"></span></a></li>
+								class="fa fa-times"></span></a></li>-->
 					</ul>
 				</div>
+                
+                
 				<div class="panel-body">
 					<table class="table datatable" id="transactionDataTable">
 						<thead>
 							<tr>
                                 <th>Transaction ID</th>
 								<th>Date</th>
-								<th>Usage (Watts)</th>
+								<th>Usage (kWh)</th>
 								<th>Status</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="value in monthValues[0]">
-								<td><a href="#/{{value.txn_id}}">{{value.txn_id}}</a></td>
-                                <td><a href="#/{{value.txn_id}}">{{value.$index}}</a></td>
-                                <td><a href="#/{{value.txn_id}}">{{value.usage}}</a></td>
-                                <td><a href="#/{{value.txn_id}}">Verified</a></td>
+							<tr ng-repeat="transaction in transactions">
+                                
+                                <td><button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.hash}}</button></td>
+                                <td><button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.timestamp}}</button></td>
+                                <td><button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.value}}</button></td>
+                                <td> <button class="btn btn-success btn-rounded" data-toggle="modal" data-target="#modal_{{transaction.hash}}"><span class="fa fa-check"></span>Verified</button> 
+                                
+                                <div class="modal" id="modal_{{transaction.hash}}" tabindex="-1" role="dialog" aria-labelledby="largeModalHead" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title" id="largeModalHead">Transaction # : {{transaction.hash}}</h4>
+                                            <button class="btn btn-success btn-rounded" disabled><span class="fa fa-check"></span>Verified</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6">Block #:</div>
+                                                <div class="col-md-6">{{transaction.blockNumber}}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6"></div>
+                                                <div class="col-md-6"></div>
+                                            </div>  
+                                            <div class="row">
+                                                <div class="col-md-6"></div>
+                                                <div class="col-md-6"></div>
+                                            </div>  
+                                            
+                                            <h5>Block #:</h5> <h6>{{transaction.blockNumber}}</h6><br/>
+                                            <h5>Time:</h5> <h6>{{transaction.timestamp}}</h6>
+                                            <h5>From:</h5><h6>{{transaction.from}}</h6> 
+                                           <h5>To: </h5><h6>{{transaction.to}}</h6>
+                                           <h5>Daily Usage:</h5><h6>{{transaction.value}}</h6> 
+                                           <h5>Gas Price: </h5><h6>{{transaction.gasPrice}}</h6>
+                                           <h5>Gas Used:</h5><h6>{{transaction.gas}}</h6>
+                                           <h5>Tx Price:</h5><h6>{{transaction.gasPrice}}</h6> 
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                        
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                </td>
 								
 							</tr>
 
@@ -120,3 +260,6 @@
 
 	</div>
 </div>
+
+
+

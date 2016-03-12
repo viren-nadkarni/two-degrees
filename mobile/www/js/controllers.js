@@ -9,7 +9,7 @@ angular.module('starter.controllers', ['chart.js'])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  
+    
    $scope.lastMonthUtilization=180;
    $scope.pricePerKwh = 5;
    $scope.master = 95;
@@ -37,6 +37,30 @@ angular.module('starter.controllers', ['chart.js'])
     $scope.modal.show();
   };
     
+
+  // Perform the login action when the user submits the login form
+  $scope.doLogin = function() {
+    console.log('Doing login', $scope.loginData);
+
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
+    $timeout(function() {
+      $scope.closeLogin();
+    }, 1000);
+  };
+
+})
+
+.controller('SplashCtrl',function($scope, $ionicModal, $ionicPopup, $location, $http){
+    
+  localStorage.setItem('isGoalSet', true);
+   $scope.lastMonthUtilization=180;
+   $scope.pricePerKwh = 5;
+   $scope.master = 95;
+   $scope.lastMonth = "February";
+   $scope.thisMonth = "March";
+   $scope.Math = window.Math;
+    
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/my-goal.html', {
     scope: $scope
@@ -51,56 +75,51 @@ angular.module('starter.controllers', ['chart.js'])
 
   // Open the login modal
   $scope.myGoal = function() {
+    console.log("inside myGoal");
     $scope.myGoalModal.show();
   };
   
   $scope.setGoal = function() {
-    console.log("11111");
-    var myGoalCommitment = parseFloat($("#tmp_power_commitment").html());
-    var tmp_percentage_committed = $("#tmp_percentage_committed").attr('value');
-    
-    if(!$scope.alertPopup) {
-       $scope.alertPopup = $ionicPopup.alert({
-         title: 'Your goal for March is set!',
-         template: 'You have pledged to utilize '+tmp_percentage_committed+'% power as compared to last month Great going!'
-       });
-       $scope.alertPopup.then(function(res) {
-         $scope.closeMyGoal();
-         $scope.alertPopup = null;
-       });
+    console.log(localStorage.getItem('setGoal'));
+      
+    if(!localStorage.getItem('setGoal')) {
+        localStorage.setItem('setGoal', true);
+        var myGoalCommitment = parseFloat($("#tmp_power_commitment").html());
+        var tmp_percentage_committed = $("#tmp_percentage_committed").attr('value');
+
+      var data = {
+           "targetUsage": myGoalCommitment,
+           "targetDate": "2016-3-1"
+        };
+      
+      $http.post('http://104.155.219.214:8080/goal/0x6015fb43e26226d80edc1c209ccd99ce2493497b', data, 
+            {headers: {
+                "Content-Type": "application/json"
+            }})
+          .then(function(response) {
+                console.log(response);
+                localStorage.setItem('setGoal', false);
+                if(!$scope.alertPopup) {
+                   $scope.alertPopup = $ionicPopup.alert({
+                     title: 'Your goal for March is set!',
+                     template: 'You have pledged to utilize '+tmp_percentage_committed+'% power as compared to last month Great going!'
+                   });
+                   $scope.alertPopup.then(function(res) {
+                     $scope.closeMyGoal();
+                     $location.url('/app/power');
+                     $scope.alertPopup = null;
+                   });
+                }
+            }, function(response) {
+                console.log(response);
+            });
     }
     
-    /*
+
+  };
     
-    var url="http://localhost";
-    var data = {"value": myGoalCommitment};
-    $http.post(url, data, [config])
-    .then(function(response) {
-      console.log(response);
-    }, function(response) {
-      console.log(response);
-    });
-*/
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    /*
-    $timeout(function() {
-      $scope.closeMyGoal();
-    }, 1000);
-    */
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-
+    
+    
 })
 
 .controller('PowerCtrl',function($scope, $interval){
@@ -124,7 +143,7 @@ angular.module('starter.controllers', ['chart.js'])
     
     var items = [];
     socket.on('my response', function(item) {
-        console.log(item);
+        //console.log(item);
         items.push(item);
         if (items.length > 40) {
           items.shift();
@@ -176,9 +195,36 @@ angular.module('starter.controllers', ['chart.js'])
 	
 	
 }).controller("PowerMonthCtrl",function($scope, $interval){
+	
+	$scope.date = new Date();	
+	
+	
+	$scope.previousDay = function(){
+		$scope.disable = '';
+		$scope.date.setDate($scope.date.getDate()-1);
+	$scope.refreshGraph();		
+	}
+	
+	$scope.nextDay = function(){
+		$scope.disable = '';
+		//$scope.disabled = true;
+		if($scope.date.getDate() == new Date().getDate()){
+			$scope.disable = 'disabled';
+		}else{
+			$scope.date.setDate($scope.date.getDate()+1);			
+		}
+	}
+	$scope.refreshGraph = function(){
+		//d3.select("$chart").remove();
+		$( "#chart" ).html('');
+		//$scope.generateDayGraph();
+	}
+	
 	$scope.loadMonthGraph = function(){
-		$scope.graph = {};		
+		/*$scope.graph = {};		
 		$scope.disable = 'disabled';
+		
+		
 		$scope.graph.data = [
 		//Awake
 		[6, 12, 18, 24, 30, 36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180,186],
@@ -186,23 +232,65 @@ angular.module('starter.controllers', ['chart.js'])
 		[0.5, 1, 2, 2.5, 4, 4.5,6,8.2,8.6,10.4,10.7,11,12,15,15.5,16,17,17.5,18.6,19.4,20,20.8,21.6,22,23.1,23.9,24.6,25.3,26.2,27.1,27.9]
 	  ];
 	  
-		$scope.graph.labels = ['1', '', '', '', '5', '','','','','10','','','','','15','','','','','20','','','','','25','','','','','','31'];
+		$scope.graph.labels = ['1',  '5', '10','15','20','25','31'];
 		$scope.graph.series = ['Expected', 'Usage'];
 		$scope.graph.options = {pointDot : false,
 								pointDotRadius : 2,
 								pointDotStrokeWidth : 2,
-								
+								showTooltips: false,
 								pointHitDetectionRadius : 20,
 								datasetStrokeWidth : 4,
 								datasetFill : false,
 								scaleShowHorizontalLines: true,
 								scaleShowVerticalLines: true};
 		$scope.graph.colours = [{
-    fillColor: '#ff5526',
-    strokeColor: 'rgba(47, 132, 71, 0.8)',
-    highlightFill: 'rgba(47, 132, 71, 0.8)',
-    highlightStroke: 'rgba(47, 132, 71, 0.8)'
-}];
+    strokeColor: '#ff5526'
+}];*/
+	
+	
+	
+var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+		var lineChartData = {
+			labels : ['1','2','3','4' ,'5','6','7','8','9' ,'10', '11','12','13','14','15','16','17','18','19' ,'20', '21','22','23','24','25','26','27','28','29' ,'30'],
+			datasets : [
+				{
+					label: "Baseline",
+					fillColor : "rgba(220,220,220,0.2)",
+					strokeColor : "#D81b60",
+					datasetStrokeWidth : 4,
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					datasetFill : false,
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data : [6, 12, 18, 24, 30, 36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180,186]
+				},
+				{
+					label: "Actuals",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "#1E88E5",
+					datasetStrokeWidth : 4,
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					datasetFill : false,
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [6, 16, 20, 25, 31, 34,38,43,50,54,56,64,75]
+				}
+			]
+		}
+		var ctx = document.getElementById("lineGraph").getContext("2d");
+		window.myLine = new Chart(ctx).Line(lineChartData, {
+			responsive: false,
+			labelsFilter: function (value, index) {
+				return (index + 1) % 5 !== 0;
+			},
+			bezierCurve: false,
+			pointDot : false,
+			showTooltips: false,
+			datasetStrokeWidth : 3,
+			datasetFill : false
+		});
 		
 	//$scope.loadMonthGraph();
 	}
@@ -627,6 +715,32 @@ angular.module('starter.controllers', ['chart.js'])
       }
     ];
 	
+	
+	$scope.date = new Date();
+	
+	
+	
+	$scope.previousDay = function(){
+		$scope.disable = '';
+		$scope.date.setDate($scope.date.getDate()-1);
+	$scope.refreshGraph();		
+	}
+	
+	$scope.nextDay = function(){
+		$scope.disable = '';
+		//$scope.disabled = true;
+		if($scope.date.getDate() == new Date().getDate()){
+			$scope.disable = 'disabled';
+		}else{
+			$scope.date.setDate($scope.date.getDate()+1);			
+		}
+	}
+	$scope.refreshGraph = function(){
+		//d3.select("$chart").remove();
+		$( "#chart" ).html('');
+		$scope.generateDayGraph();
+	}
+
 });
 
     

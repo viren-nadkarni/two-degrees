@@ -54,7 +54,7 @@
 					  <div class="col col-67 col-center text-center"><h3>{{date | date:'EEEE, MMM dd, yyyy'}}</h3></div>
 					  <div class="col"><button class="button" ng-class="disable"  ng-click="nextDay()"><i class="icon ion-arrow-right-b"></i></button></div>
 					</div>
-			<div id="chart" style="text-align: center;"></div>
+					<div id="chart" style="text-align: center;"></div>
                 </div>
 		</div>
 		</ion-slide>
@@ -63,9 +63,15 @@
 		<div class="item item-divider">
                     How you are doing this month 
                 </div>
-                <div class="item item-text-wrap">
-                    
-					<canvas id="bar" class="chart chart-line" data="graph.data" options="graph.options" labels="graph.labels" series='graph.series' colours='graph.colours' height="350"></canvas>
+				<div class="item item-text-wrap row" style="margin-top:10px;border-top:0px;">
+					  <div class="col"><button class="button" ng-click="previousDay()"> <i class="icon ion-arrow-left-b disabled"></i></button></div>
+					  <div class="col col-67 col-center text-center"><h3>{{date | date:'EEEE, MMM dd, yyyy'}}</h3></div>
+					  <div class="col"><button class="button" ng-class="disable"  ng-click="nextDay()"><i class="icon ion-arrow-right-b"></i></button></div>
+					</div>
+                <div class="item item-text-wrap row" style="text-align:center;margin-top:10px;border-top:0px;margin-left:10px;">
+					
+                    <canvas id="lineGraph" height="325px" width="325px"></canvas>
+					<!--canvas id="bar" class="chart chart-line" data="graph.data" options="graph.options" labels="graph.labels" series='graph.series' colours='graph.colours' height="350"></canvas-->
                 </div>
 			
 			</div>
@@ -73,7 +79,6 @@
 
         <ion-slide ion-slide-tab-label="Year" ng-controller="PowerYearCtrl">
 			<div class="graph-display">
-			{{type}}
 				 <canvas class="chart chart-base" chart-type="type" data="yearData" labels="yearlabels"></canvas>
 		    </div>
 		</ion-slide>

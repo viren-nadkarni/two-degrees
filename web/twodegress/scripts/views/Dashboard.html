@@ -45,7 +45,7 @@
 				class="widget widget-default widget-no-subtitle widget-border-bottom">
 				<div class="widget-big-int">
 					<span class="num-count set-color"><count-up count-to="68001"
-                                                                interval="1" increment-by="67793"></count-up></span>kWh
+							interval="1" increment-by="67793"></count-up></span>kWh
 				</div>
 				<div class="widget-title">Citizen Consumption</div>
 
@@ -76,7 +76,7 @@
 				<div class="panel-heading">
 					<div class="panel-title-box">
 						<h3>Usage</h3>
-						<span>Usage of electricity by states</span>
+						<span>usage of electricity by states</span>
 					</div>
 
 
@@ -103,11 +103,11 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">Top User Saving Stats</h3>
 					<ul class="panel-controls">
-						<li><a href="#/" class="panel-collapse"><span
+						<li><a href="#" class="panel-collapse"><span
 								class="fa fa-angle-down"></span></a></li>
-						<li><a href="#/" class="panel-refresh"><span
+						<li><a href="#" class="panel-refresh"><span
 								class="fa fa-refresh"></span></a></li>
-						<li><a href="#/" class="panel-remove"><span
+						<li><a href="#" class="panel-remove"><span
 								class="fa fa-times"></span></a></li>
 					</ul>
 				</div>
@@ -124,9 +124,9 @@
 						<tbody>
 							<tr ng-repeat="customer in customerData ">
 								<td><strong><a
-										href="#customerDetail/{{customer.id}}">{{customer.name}}</a></strong></td>
+										href="#customerDetail/{{customer.wallet_id}}">{{customer.name}}</a></strong></td>
 								<td>{{customer.state}}</td>
-								<td>125</td>
+								<td>{{customer.balance}}</td>
 								<td>
 									<div class="progress">
 										<div class="progress-bar progress-bar-success"
@@ -146,11 +146,11 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">Top Industries Saving Stats</h3>
 					<ul class="panel-controls">
-						<li><a href="#/" class="panel-collapse"><span
+						<li><a href="#" class="panel-collapse"><span
 								class="fa fa-angle-down"></span></a></li>
-						<li><a href="#/" class="panel-refresh"><span
+						<li><a href="#" class="panel-refresh"><span
 								class="fa fa-refresh"></span></a></li>
-						<li><a href="#/" class="panel-remove"><span
+						<li><a href="#" class="panel-remove"><span
 								class="fa fa-times"></span></a></li>
 					</ul>
 				</div>
@@ -250,3 +250,8 @@
 		<script type="text/javascript" src="js/demo_dashboard.js"></script>
 	</div>
 </div>
+
+
+
+
+

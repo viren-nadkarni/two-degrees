@@ -6,6 +6,9 @@ var app = angular.module('twodegres', ['ngRoute','chart.js']).config(function($r
   }).when('/customerDetail/:customerId', {
     templateUrl: 'scripts/views/CustomerDetail.html',
     controller: 'CustomerController'
+  }).when('/globalImpact/', {
+    templateUrl: 'scripts/views/globalImpact.html',
+    controller: 'globalImpactController'
   })
 });
 

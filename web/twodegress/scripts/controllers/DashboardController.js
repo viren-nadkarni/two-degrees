@@ -119,10 +119,10 @@ data.usageStats = {
                                         
     $http({
         method: 'GET',
-        url: 'http://104.197.9.200/users'
+        url: 'http://104.197.9.200/topscore'
         }).then(function successCallback(response) {
            // console.log(response);
-            $scope.customerData = response.data.users;
+            $scope.customerData = response.data;
             $.unblockUI(); 
         }, function errorCallback(response) {
             $scope.customerData = {};

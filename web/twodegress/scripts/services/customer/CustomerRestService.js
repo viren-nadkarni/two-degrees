@@ -23,6 +23,61 @@ var CustomerRestService = function(configService, restServiceProxy ) {
  */
 
 CustomerRestService.prototype = {
+    
+    //
+    /**
+     * get contract
+     * @method getCustomerList
+     * @param onSuccess
+     * @param onError
+     */
+    getContract : function(onSuccess ,onError) {
+		var url = "http://104.155.219.214:8080/contract";
+    	//var url = 'http://localhost:8080/Bluemix/data/data_1.json';
+        return this.restServiceProxy.get(url ,{ 
+            onSuccess : onSuccess,
+            onError : onError,
+            on400 : onError,
+            on404 : onError
+        });
+    },
+    
+    
+    /**
+     * get customers transactions
+     * @method getCustomerList
+     * @param onSuccess
+     * @param onError
+     */
+    getCustomerTransactions : function(id,onSuccess ,onError) {
+		var url = "http://104.155.219.214:8080/logs/transactions/"+id;
+    	//var url = 'http://localhost:8080/Bluemix/data/data_1.json';
+        return this.restServiceProxy.get(url ,{ 
+            onSuccess : onSuccess,
+            onError : onError,
+            on400 : onError,
+            on404 : onError
+        });
+    },
+    
+    
+    /**
+     * get customers stats
+     * @method getCustomerList
+     * @param onSuccess
+     * @param onError
+     */
+    getCustomerStats : function(id,onSuccess ,onError) {
+		var url = "http://104.155.219.214:8080/stats/"+id;
+    	//var url = 'http://localhost:8080/Bluemix/data/data_1.json';
+        return this.restServiceProxy.get(url ,{ 
+            onSuccess : onSuccess,
+            onError : onError,
+            on400 : onError,
+            on404 : onError
+        });
+    },
+    
 
     /**
      * get customers profiles

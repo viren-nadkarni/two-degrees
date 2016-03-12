@@ -1,0 +1,37 @@
+<div ng-controller="SplashCtrl">
+
+    <style>
+        .splash-image {
+            text-align: center;
+            height: 300px;
+            vertical-align: middle;
+            padding-top: 45px;
+
+        }
+        .splash-green-coins {
+            font-size: 24px;
+        }
+        .splash-green-coins {
+            
+        }
+        .splash-green-coins-title {
+                
+        }
+    </style>
+    <ion-view title="Welcome">
+        <div class="splash-image">
+            <img src="img/splash.png" /> 
+            <div class="splash-green-coins-title">Green Coins </div>
+            <div class="splash-green-coins"> 13356 </div>
+            <hr/>
+        </div>
+            
+            
+        <div style="margin-top:45px;">
+            <p>You have not set your goal for this month. </p>
+            <button class="button button-balanced button-full" ng-click="myGoal()">
+              Set Goal
+            </button>
+        </div>
+    </ion-view>
+</div>

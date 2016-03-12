@@ -10,7 +10,7 @@
 app.controller('CustomerController', ['$scope','$http', '$rootScope','customerService','$location','$routeParams'
        	                           	,function($scope,$http, $rootScope ,customerService,$location,$routeParams) {
                                         
-   /* $.blockUI({ 
+  /* $.blockUI({ 
             message: 'Please Wait ...',
             css: { 
             border: 'none', 
@@ -62,14 +62,14 @@ app.controller('CustomerController', ['$scope','$http', '$rootScope','customerSe
     };                                    
     
     $scope.customerId =  $routeParams.customerId;                                     
-    customerService.getCustomer($scope.customerId,function(httpcode,data){
+    /*customerService.getCustomer($scope.customerId,function(httpcode,data){
           
-        $scope.customer = data;
+        $scope.customer = data[0];
         $scope.customerTransactionsMonths = [];
         $scope.monthValues = {};
         $scope.monthValues = [];
-        console.log(data.transactions.energy);
-        angular.forEach(data.transactions.energy, function(record, rkey) {
+        console.log(data[0].transactions.energy);
+        angular.forEach(data[0].transactions.energy, function(record, rkey) {
             
             var monthYear = monthNames[record.month] + ' ' + record.year;
             
@@ -84,13 +84,46 @@ app.controller('CustomerController', ['$scope','$http', '$rootScope','customerSe
 
             });
         });
-        console.log($scope.monthValues);
+        //console.log($scope.monthValues);
         
         $.unblockUI(); 
     },function(httpcode,data){
-        console.error(httpcode);
+        
+    });*/
+                                        
+    customerService.getCustomerStats($scope.customerId,function(httpcode,data){
+        $scope.greencoinBalance = data.carboncoinBalance;
+        $scope.lifetimeUsage = data.lifetimeUsage;
+        
+    },function(httpcode,data){
+        //console.error(httpcode);
+        $.unblockUI();
         $scope.showMessage('info',SERVER_FAILURE);
-    });  
+        
+    });
+                                        
+    customerService.getCustomerTransactions($scope.customerId,function(httpcode,data){
+        
+        $scope.transactions = data.transactions;
+        //console.log($scope.transactions);
+    },function(httpcode,data){
+       // console.error(httpcode);
+        $.unblockUI();
+        $scope.showMessage('info',SERVER_FAILURE);
+        
+    });
+                                        
+    customerService.getContract(function(httpcode,data){
+        console.log(data);
+        console.log("zZZZ")
+        console.log(data.contractBytecode.Carboncoin.info.source);
+        $scope.contract = data;
+        $.unblockUI();
+    },function(httpcode,data){
+        $.unblockUI();
+        $scope.showMessage('info',SERVER_FAILURE);
+    });                                    
+                                        
                                     
    
                                         
@@ -105,7 +138,45 @@ app.controller('CustomerController', ['$scope','$http', '$rootScope','customerSe
   $scope.barData = [
     [65, 59, 80, 81, 56, 55, 40],
     [28, 48, 40, 19, 86, 27, 90]
-  ];    
+  ];
+                                        
+  var maxHeight = 0;
+  maxHeight = $("#profilePanel").height();
+  
+  var chartPanelHeight = $("#chartPanel").height();
+  var rewardPanelHeight = $("#rewardPanel").height();
+  if(maxHeight<chartPanelHeight){
+      maxHeight = chartPanelHeight;
+  }
+  
+ if(maxHeight<rewardPanelHeight){
+      maxHeight = rewardPanelHeight;
+  }                                        
+                                        
+// rewardPanel, chartPanel  profilePanel
+    $("#profilePanel").height(maxHeight);
+    $("#chartPanel").height(maxHeight);
+    $("#rewardPanel").height(maxHeight);
+                                        
+  maxHeight = 0;
+                                        
+//contractPanel, committmentPanel, currentEarningPanel                
+                                        
+maxHeight = $("#contractPanel").height();                  
+
+var committmentPanelHeight = $("#committmentPanel").height();
+var currentEarningPanelHeight = $("#currentEarningPanel").height();
+  if(maxHeight<committmentPanelHeight){
+      maxHeight = committmentPanelHeight;
+  }
+  
+ if(maxHeight<currentEarningPanelHeight){
+      maxHeight = currentEarningPanelHeight;
+  }    
+  
+    $("#contractPanel").height(maxHeight);
+    $("#committmentPanel").height(maxHeight);
+    $("#currentEarningPanel").height(maxHeight);
 
 }]);
 	
