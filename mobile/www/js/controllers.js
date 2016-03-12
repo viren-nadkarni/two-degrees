@@ -82,8 +82,8 @@ angular.module('starter.controllers', ['chart.js'])
   $scope.setGoal = function() {
     console.log(localStorage.getItem('setGoal'));
       
-    if(!localStorage.getItem('setGoal')) {
-        localStorage.setItem('setGoal', true);
+    if(localStorage.getItem('setGoal') == '0') {
+        localStorage.setItem('setGoal', '1');
         var myGoalCommitment = parseFloat($("#tmp_power_commitment").html());
         var tmp_percentage_committed = $("#tmp_percentage_committed").attr('value');
 
@@ -98,7 +98,7 @@ angular.module('starter.controllers', ['chart.js'])
             }})
           .then(function(response) {
                 console.log(response);
-                localStorage.setItem('setGoal', false);
+                localStorage.setItem('setGoal', '0');
                 if(!$scope.alertPopup) {
                    $scope.alertPopup = $ionicPopup.alert({
                      title: 'Your goal for March is set!',
@@ -113,6 +113,8 @@ angular.module('starter.controllers', ['chart.js'])
             }, function(response) {
                 console.log(response);
             });
+    } else {
+        console.log("error");
     }
     
 

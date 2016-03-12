@@ -18,7 +18,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive','
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-      
+    localStorage.setItem('setGoal', '0');
     $location.url('/splash');  
 //      var isGoalSet = localStorage.getItem('isGoalSet');
 //      console.log(isGoalSet);
