@@ -1,0 +1,252 @@
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#/">Home</a></li>
+	<li class="active">Dashboard</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+
+	<!-- START WIDGETS -->
+	<div class="row">
+
+		<div class="col-md-3">
+
+			<div
+				class="widget widget-default widget-no-subtitle widget-border-bottom">
+				<div class="widget-big-int">
+					<span class="num-count set-color"><count-up count-to="45681"
+							interval="1" increment-by="500"></count-up></span>
+				</div>
+				<div class="widget-title">Committed Citizens</div>
+
+			</div>
+
+		</div>
+		<div class="col-md-3">
+
+			<div
+				class="widget widget-default widget-no-subtitle widget-border-bottom">
+				<div class="widget-big-int">
+					<span class="num-count set-color"><count-up count-to="396"
+							interval="1" increment-by="10"></count-up></span>
+				</div>
+				<div class="widget-title">Committed Enterprises</div>
+
+			</div>
+
+		</div>
+		<div class="col-md-3">
+
+			<div
+				class="widget widget-default widget-no-subtitle widget-border-bottom">
+				<div class="widget-big-int">
+					<span class="num-count set-color"><count-up count-to="68001"
+							interval="3000" increment-by="67793"></count-up></span>kWh
+				</div>
+				<div class="widget-title">Citizen Consumption</div>
+
+			</div>
+
+		</div>
+		<div class="col-md-3">
+
+			<div
+				class="widget widget-default widget-no-subtitle widget-border-bottom">
+				<div class="widget-big-int">
+					<span class="num-count set-color"><count-up count-to="45000"
+							interval="2000" increment-by="44660"></count-up></span>kWh
+				</div>
+				<div class="widget-title">Enterprise Consumption</div>
+
+			</div>
+
+		</div>
+
+	</div>
+	<!-- END WIDGETS -->
+	<div class="row">
+		<div class="col-md-4">
+
+			<!-- START SALES BLOCK -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title-box">
+						<h3>Usage</h3>
+						<span>usage of electricity by states</span>
+					</div>
+
+
+				</div>
+				<div class="panel-body">
+					<div class="row">
+
+						<div class="col-md-12">
+							<div id="dashboard-map-india" style="width: 100%; height: 400px"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END SALES BLOCK -->
+
+		</div>
+
+		<div class="col-md-4">
+
+			<!-- START Savers BLOCK -->
+			<div class="panel panel-default">
+
+
+				<div class="panel-heading">
+					<h3 class="panel-title">Top User Saving Stats</h3>
+					<ul class="panel-controls">
+						<li><a href="#" class="panel-collapse"><span
+								class="fa fa-angle-down"></span></a></li>
+						<li><a href="#" class="panel-refresh"><span
+								class="fa fa-refresh"></span></a></li>
+						<li><a href="#" class="panel-remove"><span
+								class="fa fa-times"></span></a></li>
+					</ul>
+				</div>
+				<div class="panel-body">
+					<table class="table datatable">
+						<thead>
+							<tr>
+								<th width="40%">User</th>
+								<th width="20%">State</th>
+								<th width="10%">CC</th>
+								<th width="30%">Energy Saving</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="customer in customerData ">
+								<td><strong><a
+										href="#customerDetail/{{customer.id}}">{{customer.name}}</a></strong></td>
+								<td>{{customer.state}}</td>
+								<td>125</td>
+								<td>
+									<div class="progress">
+										<div class="progress-bar progress-bar-success"
+											role="progressbar" aria-valuenow="40" aria-valuemin="0"
+											aria-valuemax="100" style="width: 40%">40%</div>
+									</div>
+								</td>
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Top Industries Saving Stats</h3>
+					<ul class="panel-controls">
+						<li><a href="#" class="panel-collapse"><span
+								class="fa fa-angle-down"></span></a></li>
+						<li><a href="#" class="panel-refresh"><span
+								class="fa fa-refresh"></span></a></li>
+						<li><a href="#" class="panel-remove"><span
+								class="fa fa-times"></span></a></li>
+					</ul>
+				</div>
+				<div class="panel-body">
+					<table class="table datatable">
+						<thead>
+							<tr>
+								<th width="40%">Company</th>
+								<th width="20%">State</th>
+								<th width="10%">CC</th>
+								<th width="30%">Energy Saving</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><strong>Persistent</strong></td>
+								<td>Goa</td>
+								<td>125</td>
+								<td>
+									<div class="progress">
+										<div class="progress-bar progress-bar-success"
+											role="progressbar" aria-valuenow="40" aria-valuemin="0"
+											aria-valuemax="100" style="width: 40%">40%</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td><strong>Persistent</strong></td>
+								<td>Goa</td>
+								<td>116</td>
+								<td>
+									<div class="progress">
+										<div class="progress-bar progress-bar-success"
+											role="progressbar" aria-valuenow="36" aria-valuemin="0"
+											aria-valuemax="100" style="width: 36%">36%</div>
+									</div>
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- END savers BLOCK -->
+
+		</div>
+
+		<div class="col-md-4">
+
+			<!-- START VISITORS BLOCK -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title-box">
+						<h3>Users</h3>
+						<span>Users (last month)</span>
+					</div>
+
+				</div>
+				<div class="panel-body padding-0">
+					<div class="chart-holder" id="dashboard-donut-1"
+						style="height: 200px;"></div>
+				</div>
+			</div>
+			<!-- END VISITORS BLOCK -->
+
+			<!-- START USERS ACTIVITY BLOCK -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title-box">
+						<h3>Savings</h3>
+						<span>Individual vs Industries</span>
+					</div>
+
+				</div>
+				<div class="panel-body padding-0">
+					<div class="chart-holder" id="dashboard-bar-1"
+						style="height: 200px;"></div>
+				</div>
+			</div>
+			<!-- END USERS ACTIVITY BLOCK -->
+
+
+
+
+
+		</div>
+
+
+
+
+
+		<!-- START DASHBOARD CHART -->
+		<div class="chart-holder" id="dashboard-area-1" style="height: 200px;"></div>
+		<div class="block-full-width"></div>
+		<!-- END DASHBOARD CHART -->
+
+		<script type="text/javascript" src="js/demo_dashboard.js"></script>
+	</div>
+</div>
