@@ -3,6 +3,9 @@ var app = angular.module('twodegres', ['ngRoute','chart.js']).config(function($r
   .when('/', {
     templateUrl: 'scripts/views/Dashboard.html',
     controller: 'DashboardController'
+  }).when('/customerDetail/:customerId', {
+    templateUrl: 'scripts/views/CustomerDetail.html',
+    controller: 'CustomerController'
   })
 });
 
@@ -59,3 +62,4 @@ Chart.defaults.global.colours = [{
     highlightFill: 'rgba(47, 132, 71, 0.8)',
     highlightStroke: 'rgba(47, 132, 71, 0.8)'
 }];
+

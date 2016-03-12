@@ -7,6 +7,21 @@
  */
 app.controller('DashboardController', ['$scope', '$rootScope','$http','remoteService','$location'
        	                           	,function($scope, $rootScope ,$http,  remoteService,$location) {
+  $.blockUI({ 
+            message: 'Please Wait ...',
+            css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+            }
+            
+  }); 
+                                     
+                                        
 		var data = {
 "states":{
 	"IN-AN":1,
@@ -108,6 +123,7 @@ data.usageStats = {
         }).then(function successCallback(response) {
            // console.log(response);
             $scope.customerData = response.data.users;
+            $.unblockUI(); 
         }, function errorCallback(response) {
             $scope.customerData = {};
         });                                   

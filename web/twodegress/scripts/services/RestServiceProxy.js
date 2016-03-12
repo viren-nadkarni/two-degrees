@@ -24,6 +24,10 @@ var RestServiceProxy = function(configService , $http) {
             if (code === 401 && options.on401) {
                 return options.on401(code, data);
             }
+            if (code === 404 && options.on404) {
+                return options.on404(code, data);
+            }
+            
             if ((code === 0 || code === 500) && options.on500) {
                 return options.on500(code, data);
             }

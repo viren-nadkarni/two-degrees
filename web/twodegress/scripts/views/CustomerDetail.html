@@ -1,0 +1,122 @@
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#/">Home</a></li>
+	<li class="active"><a href="#customerDetail/{{customerId}}">User
+			Details</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap" style="height: 700px;">
+	<div class="row">
+		<div class="col-md-3">
+
+			<div class="panel panel-default">
+				<div class="panel-body profile" style="">
+					<div class="profile-image">
+						<img src="assets/images/users/user-default.png" alt="{{user.fullname}}" />
+					</div>
+					<div class="profile-data">
+						<div class="profile-data-name" style="color: #000;">{{customer.name}}</div>
+						<div class="profile-data-title" style="color: #000;">{{customer.state}}</div>
+					</div>
+
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12">
+							<button class="btn btn-info btn-block">
+								<span class="fa fa-check"></span> ProActive
+							</button>
+						</div>
+						
+					</div>
+				</div>
+
+
+			</div>
+
+		</div>
+
+		<div class="col-md-4">
+			<div class="panel">
+				<div class="panel-heading">
+					<h4>Monthly Goal Tracking</h4>
+				</div>
+				<div class="panel-body">
+
+					<canvas id="pie" class="chart chart-doughnut" chart-data="pieData"
+						chart-labels="pieLabels" chart-legend="true">
+                            </canvas>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="col-md-5">
+			<div class="panel">
+				<div class="panel-heading">
+					<h4>Rewards</h4>
+                    <a href="#" class="tile tile-default">
+                                577
+                    <p>Green Coins</p>                            
+                    <div class="informer informer-danger dir-tr"><span class="fa fa-caret-up"></span></div>
+                    </a>
+                    <a href="#" class="tile tile-default">
+                       Pro
+                    <p>Level</p>                            
+                    <div class="informer informer-danger dir-tr"><span class="fa fa-caret-up"></span></div>
+                    </a>
+				</div>
+                
+				<div class="panel-body">
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Transactions Data</h3>
+					<ul class="panel-controls">
+						<li><a href="#" class="panel-collapse"><span
+								class="fa fa-angle-down"></span></a></li>
+						<li><a href="#" class="panel-refresh"><span
+								class="fa fa-refresh"></span></a></li>
+						<li><a href="#" class="panel-remove"><span
+								class="fa fa-times"></span></a></li>
+					</ul>
+				</div>
+				<div class="panel-body">
+					<table class="table datatable" id="transactionDataTable">
+						<thead>
+							<tr>
+                                <th>Transaction ID</th>
+								<th>Date</th>
+								<th>Usage (Watts)</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="value in monthValues[0]">
+								<td><a href="#/{{value.txn_id}}">{{value.txn_id}}</a></td>
+                                <td><a href="#/{{value.txn_id}}">{{value.$index}}</a></td>
+                                <td><a href="#/{{value.txn_id}}">{{value.usage}}</a></td>
+                                <td><a href="#/{{value.txn_id}}">Verified</a></td>
+								
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- END DEFAULT DATATABLE -->
+
+		</div>
+
+	</div>
+</div>
