@@ -51,17 +51,25 @@
             </div>
           </div>
         </ion-item>
+        <ion-item class="menu-item-container">
+            <div class="menu-coins-container">
+                <div class="itemLabel">Green Coins</div>
+                <div class="itemCoins">
+                    12,356
+                </div>
+            </div>  
+        </ion-item>
         <ion-item menu-close href="#/app/power">
-          Home
+          <i class="icon ion-android-home"></i> Home
         </ion-item>
         <ion-item menu-close ng-click="myGoal()">
-          My Goal
+          <i class="icon ion-ios-speedometer"></i> My Goal
         </ion-item>
         <ion-item menu-close href="#/app/rewards">
-          Rewards
+          <i class="icon ion-ribbon-b"></i> Rewards
         </ion-item>
         <ion-item menu-close ng-click="login()">
-          Logout
+          <i class="icon ion-log-out"></i> Logout
         </ion-item>
       </ion-list>
     </ion-content>

@@ -108,6 +108,39 @@
     float: left;
 }
 
+
+.menu-coins-container {
+    background-color: #00ACC1;
+    height: 100%;
+}
+
+.menu-coins-container .itemLabel {
+    color: #fff;
+    width: 50%;
+    height: 100%;
+    padding-top: 12px;
+    padding-left: 15px;
+    float: left;
+}
+
+
+.menu-coins-container .itemCoins {
+    width: 50%;
+    height: 100%;
+    float: left;
+    text-align: right;
+    padding-right: 10px;
+    padding-top: 12px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.25em;
+}
+
+.item i {
+    font-size: 21px;
+}
+
+
 /*donuts start*/
 .donutArcs:hover {
   opacity: 0.5;
@@ -126,7 +159,6 @@
   color: #fff;
   border-radius: 2px;
 }
-
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
   box-sizing: border-box;
