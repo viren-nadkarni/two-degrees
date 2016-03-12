@@ -41,7 +41,7 @@
         </ion-slide>
        
 
-         <ion-slide ion-slide-tab-label="Day" >
+         <ion-slide ion-slide-tab-label="Day"  ng-controller="PowerDayCtrl">
 		
 		<div class="card" id="day-graph-container">
 		<div class="item item-divider">
@@ -59,12 +59,24 @@
 		</div>
 		</ion-slide>
         <ion-slide ion-slide-tab-label="Month" ng-controller="PowerMonthCtrl">
-		<div>
-			<canvas id="bar" class="chart chart-line" data="graph.data" options="graph.options" labels="graph.labels" series='graph.series' colours='graph.colors' height="350"></canvas>
+		<div class="card" id="day-graph-container">
+		<div class="item item-divider">
+                    How you are doing this month 
+                </div>
+                <div class="item item-text-wrap">
+                    
+					<canvas id="bar" class="chart chart-line" data="graph.data" options="graph.options" labels="graph.labels" series='graph.series' colours='graph.colours' height="350"></canvas>
+                </div>
+			
 			</div>
 		</ion-slide>
 
-        <ion-slide ion-slide-tab-label="Year"><h1>Tab 4</h1></ion-slide>
+        <ion-slide ion-slide-tab-label="Year" ng-controller="PowerYearCtrl">
+			<div class="graph-display">
+			{{type}}
+				 <canvas class="chart chart-base" chart-type="type" data="yearData" labels="yearlabels"></canvas>
+		    </div>
+		</ion-slide>
     </ion-slide-box>
 </ion-content>
 </ion-view>

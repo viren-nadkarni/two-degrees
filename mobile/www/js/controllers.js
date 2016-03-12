@@ -74,6 +74,7 @@ angular.module('starter.controllers', ['chart.js'])
       $scope.closeMyGoal();
     }, 1000);
   };
+  
 })
 
 .controller('PlaylistsCtrl', function($scope) {
@@ -93,6 +94,17 @@ angular.module('starter.controllers', ['chart.js'])
 
 .controller('PowerCtrl',function($scope, $interval){
        
+    
+	$( "#myBar" ).animate({
+                   "width": "+=50%"
+                }, {
+                    duration: 1000,
+                    complete: function() {
+                      $("#label").text("60%");
+                    }
+                });
+				
+				
     /***** google graph *****/
     
     var namespace = '/test'; // change to an empty string to use the global namespace
@@ -151,6 +163,41 @@ angular.module('starter.controllers', ['chart.js'])
     });
     */
 	
+	
+}).controller("PowerMonthCtrl",function($scope, $interval){
+	$scope.loadMonthGraph = function(){
+		$scope.graph = {};		
+		$scope.disable = 'disabled';
+		$scope.graph.data = [
+		//Awake
+		[6, 12, 18, 24, 30, 36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180,186],
+		//Asleep
+		[0.5, 1, 2, 2.5, 4, 4.5,6,8.2,8.6,10.4,10.7,11,12,15,15.5,16,17,17.5,18.6,19.4,20,20.8,21.6,22,23.1,23.9,24.6,25.3,26.2,27.1,27.9]
+	  ];
+	  
+		$scope.graph.labels = ['1', '', '', '', '5', '','','','','10','','','','','15','','','','','20','','','','','25','','','','','','31'];
+		$scope.graph.series = ['Expected', 'Usage'];
+		$scope.graph.options = {pointDot : false,
+								pointDotRadius : 2,
+								pointDotStrokeWidth : 2,
+								
+								pointHitDetectionRadius : 20,
+								datasetStrokeWidth : 4,
+								datasetFill : false,
+								scaleShowHorizontalLines: true,
+								scaleShowVerticalLines: true};
+		$scope.graph.colours = [{
+    fillColor: '#ff5526',
+    strokeColor: 'rgba(47, 132, 71, 0.8)',
+    highlightFill: 'rgba(47, 132, 71, 0.8)',
+    highlightStroke: 'rgba(47, 132, 71, 0.8)'
+}];
+		
+	//$scope.loadMonthGraph();
+	}
+	$scope.loadMonthGraph();
+	
+}).controller("PowerDayCtrl",function($scope, $interval){
 	
 	
 	$scope.date = new Date();
@@ -541,42 +588,41 @@ angular.module('starter.controllers', ['chart.js'])
 	}
 
 	$scope.generateDayGraph();
-    
-$( "#myBar" ).animate({
-                   "width": "+=50%"
-                }, {
-                    duration: 1000,
-                    complete: function() {
-                      $("#label").text("60%");
-                    }
-                });
-    
-    
-}).controller("PowerMonthCtrl",function($scope, $interval){
-	$scope.loadMonthGraph = function(){
-		$scope.graph = {};		
-		$scope.disable = 'disabled';
-		$scope.graph.data = [
-		//Awake
-		[1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
-		//Asleep
-		[0.5, 1, 2, 2.5, 4, 4.5,6,8.2,8.6,10.4,10.7,11,12,15,15.5,16,17,17.5,18.6,19.4,20,20.8,21.6,22,23.1,23.9,24.6,25.3,26.2,27.1,27.9]
-	  ];
-	  
-		$scope.graph.labels = ['1', '', '', '', '5', '6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'];
-		$scope.graph.series = ['Expected', 'Usage'];
-		$scope.graph.options = {pointDot : false,
-								pointDotRadius : 2,
-								pointDotStrokeWidth : 2,
-								pointHitDetectionRadius : 20,
-								datasetStrokeWidth : 4,
-								datasetFill : false,
-								scaleShowHorizontalLines: true,
-								scaleShowVerticalLines: true};
-		$scope.graph.colors = ['#ccc','green'];
-		
-	//$scope.loadMonthGraph();
-	}
-	$scope.loadMonthGraph();
+}).controller("PowerYearCtrl",function($scope, $interval){
+	
+    $scope.yearLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $scope.type = 'StackedBar';
+
+    $scope.yearData = [
+      [65, 59, 90, 81, 56, 55, 40],
+      [28, 48, 40, 19, 96, 27, 100]
+    ];
+    $scope.colours = [
+      { // grey
+        fillColor: 'rgba(148,159,177,0.2)',
+        strokeColor: 'rgba(148,159,177,1)',
+        pointColor: 'rgba(148,159,177,1)',
+        pointStrokeColor: '#fff',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(148,159,177,0.8)'
+      },
+      { // dark grey
+        fillColor: 'rgba(77,83,96,0.2)',
+        strokeColor: 'rgba(77,83,96,1)',
+        pointColor: 'rgba(77,83,96,1)',
+        pointStrokeColor: '#fff',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(77,83,96,1)'
+      }
+    ];
 	
 });
+
+    
+
+    
+    
+
+
+
+
