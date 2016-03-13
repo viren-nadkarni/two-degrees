@@ -55,34 +55,37 @@
 		<div class="col-md-4">
 			<div class="panel" id="rewardPanel">
 				<div class="panel-heading">
-					<h4>Rewards</h4>
-                    <a id="greencoinBalance" href="#/" class="tile tile-success">
+					<h4>Rewards & Badges</h4>
+                    <a id="greencoinBalance" href="#/customerDetail/{{customerId}}" class="tile tile-success">
                                 {{greencoinBalance}}
                     <p>Green Coins</p>                            
-                    <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+                    <div class="informer informer-success dir-tr"></div>
                     </a>
                     <a href="#/customerDetail/{{customerId}}" class="tile tile-default messages-img">
                        <div class="row">
                            <div class="col-md-4">
                                 <div class="user">
-                                    <img src="assets/images/badges/badge1.png" alt="Nadia Ali" class="img-responsive center-block">
+                                    <img src="assets/images/badges/badge1.png" alt="Environment Friendly" class="img-responsive center-block">
+                                    <span class="label label-success">Env. Friendly</span>
                                 </div>
                                <!--//Environment Friendly-->
                             </div>
                            <div class="col-md-4">
                                 <div class="user">
-                                    <img src="assets/images/badges/badge2.png" alt="Nadia Ali" class="img-responsive center-block">
+                                    <img src="assets/images/badges/badge2.png" alt="Highly Efficient" class="img-responsive center-block">
+                                    <span class="label label-success">Highly Efficient</span>
                                 </div>
                               <!-- Saver Boost-->
                            </div>
                            <div class="col-md-4">
                                 <div class="user">
-                                    <img src="assets/images/badges/badge3.png" alt="Nadia Ali" class="img-responsive center-block">
+                                    <img src="assets/images/badges/badge3.png" alt="Plug Doctor" class="img-responsive center-block">
+                                    <span class="label label-success">Plug Doctor</span>
                                 </div>
                                <!--Experience-->
                            </div>
                         </div> 
-                    <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+                    <div class="informer informer-success dir-tr"></div>
                     </a>
 				</div>
                 
@@ -113,10 +116,10 @@
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                             <h4 class="modal-title" id="largeModalHead">Contract # : {{contract.contractAddress}}</h4>
-                                           
+                                            <button class="btn btn-success btn-rounded" disabled><span class="fa fa-check"></span>Verified</button>
                                         </div>
-                                        <div class="modal-body">
-                                                <pre class="text-left">contract Carboncoin<br>{<br>struct Goal <br>{<br>uint goalTimestamp;<br>uint goalUsage;<br>uintcurrentCumulativeUsage;<br>uint previousCumulativeUsage;<br>}<br>/* TODO: carboncoin conversion rate?*/<br>mapping (address => Goal) internal goals;<br> /* to maintain goals/usage */<br>mapping (address => uint) internalledger;<br> /* to maintain carbon coin balance */<br>address public master;<br>event earnCoin(address target,uint amount);<br>event spendCoin(address target, uint amount);<br>function Carboncoin() <br>{<br>master =msg.sender;<br>}<br>function balance()<br> public constant returns (uint) <br>{<br>return ledger[msg.sender];<br>}<br>functionbalance(address wallet) <br>public constant returns (uint) <br>{<br>returnledger[wallet];<br>}<br>function credit(address target, uint amount) <br>public <br>{<br>ledger[target] +=amount;<br>earnCoin(target, amount);<br>}<br>function debit(address target, uint amount)<br> public <br>{<br>ledger[target] -=amount;<br>spendCoin(target, amount);<br>}<br>/* TODO: limit access to below method to owner */<br>functionsetGoal(addresstarget, uint goalTimestamp, uint goalUsage) <br>{<br>goals[target].goalTimestamp =goalTimestamp;<br>goals[target].goalUsage = goalUsage;<br>}<br>function getGoal(address coinbase) <br>returns (uint)<br>{<br>return goals[coinbase].goalUsage;<br>}<br>function recordUsage(address target, uint usage)<br>{<br>goals[target].currentCumulativeUsage += usage;<br>}<br>function checkGoal(address target, uint currentTimestamp)<br>returns (bool) <br>{<br>uint goalTimestamp = goals[target].goalTimestamp;<br>uint goalUsage =goals[target].goalUsage;<br>uint totalUsage = goals[target].currentCumulativeUsage - goals[target].previousCumulativeUsage;<br>/*if (currentTimestamp >= goalTimestamp) <br>{<br> */<br>if (totalUsage <goalUsage) <br>{credit(target, totalUsage - goalUsage);<br>return true;<br>} <br>/*else <br>{<br>debit(target, goalUsage -totalUsage);<br>return false;<br>}<br>*//* TODO: add logic to reset goals */<br>goals[target].previousCumulativeUsage=goals[target].currentCumulativeUsage;<br>}<br>}                                               
+                                        <div class="modal-body" style="font-size:18px">
+                                                <pre class="text-left" style="font-size:18px !important">contract Carboncoin<br>{<br>struct Goal <br>{<br>uint goalTimestamp;<br>uint goalUsage;<br>uintcurrentCumulativeUsage;<br>uint previousCumulativeUsage;<br>}<br>/* TODO: carboncoin conversion rate?*/<br>mapping (address => Goal) internal goals;<br> /* to maintain goals/usage */<br>mapping (address => uint) internalledger;<br> /* to maintain carbon coin balance */<br>address public master;<br>event earnCoin(address target,uint amount);<br>event spendCoin(address target, uint amount);<br>function Carboncoin() <br>{<br>master =msg.sender;<br>}<br>function balance()<br> public constant returns (uint) <br>{<br>return ledger[msg.sender];<br>}<br>functionbalance(address wallet) <br>public constant returns (uint) <br>{<br>returnledger[wallet];<br>}<br>function credit(address target, uint amount) <br>public <br>{<br>ledger[target] +=amount;<br>earnCoin(target, amount);<br>}<br>function debit(address target, uint amount)<br> public <br>{<br>ledger[target] -=amount;<br>spendCoin(target, amount);<br>}<br>/* TODO: limit access to below method to owner */<br>functionsetGoal(addresstarget, uint goalTimestamp, uint goalUsage) <br>{<br>goals[target].goalTimestamp =goalTimestamp;<br>goals[target].goalUsage = goalUsage;<br>}<br>function getGoal(address coinbase) <br>returns (uint)<br>{<br>return goals[coinbase].goalUsage;<br>}<br>function recordUsage(address target, uint usage)<br>{<br>goals[target].currentCumulativeUsage += usage;<br>}<br>function checkGoal(address target, uint currentTimestamp)<br>returns (bool) <br>{<br>uint goalTimestamp = goals[target].goalTimestamp;<br>uint goalUsage =goals[target].goalUsage;<br>uint totalUsage = goals[target].currentCumulativeUsage - goals[target].previousCumulativeUsage;<br>/*if (currentTimestamp >= goalTimestamp) <br>{<br> */<br>if (totalUsage <goalUsage) <br>{credit(target, totalUsage - goalUsage);<br>return true;<br>} <br>/*else <br>{<br>debit(target, goalUsage -totalUsage);<br>return false;<br>}<br>*//* TODO: add logic to reset goals */<br>goals[target].previousCumulativeUsage=goals[target].currentCumulativeUsage;<br>}<br>}                                             
                                                 
                                                 </pre>
                                                 
@@ -160,10 +163,10 @@
 
 
                     <div class="panel-heading">
-                        <h3 class="panel-title">Current Earnings </h3> 
+                        <h3 class="panel-title">Wallet ID </h3> 
                     </div>
-                    <div class="panel-body">
-                        12233123
+                    <div class="panel-body" style="font-size:14px !important">
+                        {{customerId}}
                     </div>
                     
 
@@ -211,68 +214,73 @@
                                         <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <h4 class="modal-title" id="largeModalHead">Transaction # : {{transaction.hash}}</h4>
+                                            <h4 class="modal-title" id="largeModalHead">Transaction Details </h4>
                                             <button class="btn btn-success btn-rounded" disabled><span class="fa fa-check"></span>Verified</button>
                                         </div>
                                         <div class="modal-body">
+                                           
+                                            <div class="row">
+                                                <div class="col-md-2 modal-title"><h3>Trx #:</h3></div>
+                                                <div class="col-md-10 modal-desc text-wrap"><h3>{{transaction.hash}}</h3></div>
+                                            </div>
                                             
                                             <div class="row">
-                                                <div class="col-md-4 modal-title"><h3>Block #:</h3></div>
-                                                <div class="col-md-8 modal-desc"><h3>{{transaction.blockNumber}}</h3></div>
+                                                <div class="col-md-2 modal-title"><h3>Block #:</h3></div>
+                                                <div class="col-md-10 modal-desc"><h3>{{transaction.blockNumber}}</h3></div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4 modal-title">
+                                                <div class="col-md-2 modal-title">
                                                 <h3>Time :</h3>
                                                 </div>
-                                                <div class="col-md-8 modal-desc">
+                                                <div class="col-md-10 modal-desc">
                                                 <h3>{{transaction.timestamp}}</h3>
                                                 </div>
                                             </div>  
                                             <div class="row">
-                                                <div class="col-md-4 modal-title">
+                                                <div class="col-md-2 modal-title">
                                                 <h3>From:</h3>
                                                 </div>
-                                                <div class="col-md-8 modal-desc">
+                                                <div class="col-md-10 modal-desc">
                                                 <h3>{{transaction.from}}</h3>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4  modal-title">
+                                                <div class="col-md-2  modal-title">
                                                 <h3>To:</h3>
                                                 </div>
-                                                <div class="col-md-8  modal-desc">
+                                                <div class="col-md-10  modal-desc">
                                                 <h3>{{transaction.to}}</h3>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4  modal-title">
+                                                <div class="col-md-2  modal-title">
                                                 <h3>Daily Usage:</h3>
                                                 </div>
-                                                <div class="col-md-8 modal-desc">
+                                                <div class="col-md-10 modal-desc">
                                                 <h3>{{transaction.value}}</h3>
                                                 </div>
                                             </div>
                                              <div class="row">
-                                                <div class="col-md-4 modal-title">
+                                                <div class="col-md-2 modal-title">
                                                 <h3>Gas Price:</h3>
                                                 </div>
-                                                <div class="col-md-8 modal-desc">
+                                                <div class="col-md-10 modal-desc">
                                                 <h3>{{transaction.gasPrice}}</h3>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4 modal-title">
+                                                <div class="col-md-2 modal-title">
                                                 <h3>Gas Used:</h3>
                                                 </div>
-                                                <div class="col-md-8 modal-desc">
+                                                <div class="col-md-10 modal-desc">
                                                <h3>{{transaction.gas}}</h3>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4 modal-title">
+                                                <div class="col-md-2 modal-title">
                                                 <h3>Tx Price:</h3>
                                                 </div>
-                                                <div class="col-md-8 modal-desc ">
+                                                <div class="col-md-10 modal-desc ">
                                                <h3>{{transaction.gasPrice}}</h3>
                                                 </div>
                                             </div>

@@ -8,9 +8,15 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive','chart.js', 'ngMaterial'])
 
 .run(function($ionicPlatform, $location) {
-  $ionicPlatform.ready(function() {
+    console.log("outside ready");
+    localStorage.setItem('setGoal', '0');
+    $ionicPlatform.ready(function() {
+    console.log("inside ready");
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
+    console.log("before splash");
+    $location.url('/splash');  
+      console.log("after splash");
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
@@ -18,8 +24,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive','
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-    localStorage.setItem('setGoal', '0');
-    $location.url('/splash');  
+    
+    
 //      var isGoalSet = localStorage.getItem('isGoalSet');
 //      console.log(isGoalSet);
 //      if (!isGoalSet || isGoalSet == null || isGoalSet == false) {

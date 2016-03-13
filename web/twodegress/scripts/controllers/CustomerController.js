@@ -10,7 +10,7 @@
 app.controller('CustomerController', ['$scope','$http', '$rootScope','customerService','$location','$routeParams'
        	                           	,function($scope,$http, $rootScope ,customerService,$location,$routeParams) {
                                         
-  /* $.blockUI({ 
+  $.blockUI({ 
             message: 'Please Wait ...',
             css: { 
             border: 'none', 
@@ -22,7 +22,7 @@ app.controller('CustomerController', ['$scope','$http', '$rootScope','customerSe
             color: '#fff' 
             }
             
-  }); */
+  }); 
                                         
                            
     /*customerService.getCustomerList(function(httpcode,data){

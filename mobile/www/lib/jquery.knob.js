@@ -113,7 +113,7 @@
                     height: this.$.data('height') || 200,
                     displayInput: this.$.data('displayinput') == null || this.$.data('displayinput'),
                     displayPrevious: this.$.data('displayprevious'),
-                    fgColor: this.$.data('fgcolor') || '#87CEEB',
+                    fgColor: this.$.data('fgcolor') || '#C1F985',
                     inputColor: this.$.data('inputcolor'),
                     font: this.$.data('font') || 'Arial',
                     fontWeight: this.$.data('font-weight') || 'bold',
@@ -506,7 +506,7 @@
 
         this.extend = function () {
             this.o = $.extend({
-                bgColor: this.$.data('bgcolor') || '#7CB342',
+                bgColor: this.$.data('bgcolor') || '#D6F7B1',
                 angleOffset: this.$.data('angleoffset') || 0,
                 angleArc: this.$.data('anglearc') || 360,
                 inline: true
@@ -714,7 +714,8 @@
                         'margin-left' : '-' + ((this.w * 3 / 4 + 2) >> 0) + 'px',
                         'border' : 0,
                         'background' : 'none',
-                        'font' : this.o.fontWeight + ' ' + ((this.w / s) >> 0) + 'px ' + this.o.font,
+                        //'font' : this.o.fontWeight + ' ' + ((this.w / s) >> 0) + 'px ' + this.o.font,
+                        'font' : '27px ' + this.o.font,
                         'text-align' : 'center',
                         'color' : this.o.inputColor || this.o.fgColor,
                         'padding' : '0px',

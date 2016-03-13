@@ -10,7 +10,7 @@ angular.module('starter.controllers', ['chart.js'])
   //});
 
    $scope.myGoal = function() {
-       $rootScope.$broadcast("opengoal");l
+       $rootScope.$broadcast("opengoal");
    }
    $scope.lastMonthUtilization=180;
    $scope.pricePerKwh = 5;
@@ -105,9 +105,11 @@ angular.module('starter.controllers', ['chart.js'])
             },
             'release' : function (v) { 
                 console.log(v); 
+            }, 
+            'format': function(value) {
+                   return value + " kWh";
             }
-
-
+            //'font': '1000px'
 
     }); 
     $scope.myGoalModal.show();
