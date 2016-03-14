@@ -1,44 +1,48 @@
 <ion-modal-view>
-  <ion-header-bar class="bar-balanced">
-    <div class="buttons my-goal-back-container">
-      <button class="button button-clear ion-android-arrow-back" ng-click="closeMyGoal()"></button>
-    </div>
-    <h1 class="title">My Goal</h1>
-  </ion-header-bar>
-  <ion-content style="background-color: #E2E2E2;" >
-    <form ng-submit="setGoal()">
-      <div class="list">
-          <div ng-cloak="" class="sliderdemoVertical">
-              <md-content layout="row" layout-padding="">
-                  <div flex="" style="padding: 0px; overflow: hidden;">
-                        <div class="seperator-div"></div>
-                        <div class="usage">
-                            <div class="usage-label">Your usage last year same month</div>
-                            <div class="usage-figures">{{lastMonthUtilization}} kWh</div>
-                        </div>
-                        <div class="seperator-div"></div>
-                        <div class="setter">
-                            <div class="setter-label">What is your savings goal?</div>
-                            <div class="setter-sub-label">Set your goal for this month</div>
-                            <div class="setter-slide-container" style="text-align:center;">
-                              <input class="knob" data-thickness=".2" data-skin="tron" data-width="200" data-min="0" data-max="{{lastMonthUtilization}}" data-displayPrevious=false data-angleOffset=-0 data-angleArc=360 data-fgColor="#ee6e73" ng-model="master">
+    <ion-header-bar class="bar-balanced">
+        <div class="buttons my-goal-back-container">
+            <button class="button button-clear ion-android-arrow-back" ng-click="closeMyGoal()"></button>
+        </div>
+        <h1 class="title">My Goal</h1>
+    </ion-header-bar>
+    <ion-content style="background-color: #E2E2E2;">
+        <form ng-submit="setGoal()">
+            <div class="list">
+                <div ng-cloak="" class="sliderdemoVertical">
+                    <md-content layout="row" layout-padding="">
+                        <div flex="" style="padding: 0px; overflow: hidden;">
+                            <div class="seperator-div"></div>
+                            <div class="usage">
+                                <div class="usage-label">Your usage last year same month</div>
+                                <div class="usage-figures">{{lastMonthUtilization}} kWh</div>
                             </div>
-                            <div class="setter-savings-label">GREEN COINS</div>
-                            <div class="setter-savings-amount" id="my-goal-green-coins">{{defaultPowerConsumption}}</div>
-                            <div class="setter-savings-watts" style="display:none;"><span id="my-goal-kwh-commitment">{{master}}</span></div>
-                            <input type="hidden" id="tmp_percentage_committed" value="{{master}}">
-                        </div>
-                      
-                        <div class="goal-button" ng-hide="goalCommittedSuccess" ><button class="button button-block button-assertive" type="submit">COMMIT GOAL</button></div>
-                        <div ng-show="goalCommittedSuccess">
-                            <div class="goal-success">You have pledged to utilise <span class='large-font'>{{myGoalCommitment}}</span> kWh which is <span class='large-font'>{{percentageCommitted}}%</span> less than your utilization last year this month!
+                            <div class="seperator-div"></div>
+                            <div class="setter">
+                                <div class="setter-label">What is your savings goal?</div>
+                                <div class="setter-sub-label">Set your goal for this month</div>
+                                <div class="setter-slide-container" style="text-align:center;">
+                                    <input class="knob" data-thickness=".2" data-skin="tron" data-width="200" data-min="0" data-max="{{lastMonthUtilization}}" data-displayPrevious=false data-angleOffset=-0 data-angleArc=360 data-fgColor="#ee6e73" ng-model="master">
                                 </div>
-                            <div class="goal-button-home"  ><button class="button button-block button-balanced" ng-click="closeMyGoal()">HOME</button></div>
+                                <div class="setter-savings-label">GREEN COINS</div>
+                                <div class="setter-savings-amount" id="my-goal-green-coins">{{defaultPowerConsumption}}</div>
+                                <div class="setter-savings-watts" style="display:none;"><span id="my-goal-kwh-commitment">{{master}}</span></div>
+                                <input type="hidden" id="tmp_percentage_committed" value="{{master}}">
+                            </div>
+
+                            <div class="goal-button" ng-hide="goalCommittedSuccess">
+                                <button class="button button-block button-assertive" type="submit">COMMIT GOAL</button>
+                            </div>
+                            <div ng-show="goalCommittedSuccess">
+                                <div class="goal-success">You have pledged to utilise <span class='large-font'>{{myGoalCommitment}}</span> kWh which is <span class='large-font'>{{percentageCommitted}}%</span> less than your utilization last year this month!
+                                </div>
+                                <div class="goal-button-home">
+                                    <button class="button button-block button-balanced" ng-click="closeMyGoal()">HOME</button>
+                                </div>
+                            </div>
                         </div>
-                  </div>
-              </md-content>
-          </div>
-      </div>
-    </form>
-  </ion-content>
+                    </md-content>
+                </div>
+            </div>
+        </form>
+    </ion-content>
 </ion-modal-view>

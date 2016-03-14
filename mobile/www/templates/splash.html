@@ -1,17 +1,18 @@
 <div ng-controller="SplashCtrl">
     <ion-view title="Welcome">
         <div class="splash-image">
-            <img src="img/splash1.png" /> 
+            <img src="img/splash1.png" />
             <div class="splash-green-coins-title">Green Coins </div>
-            <div class="splash-green-coins"><count-up count-to="12356"
-                            interval="1" increment-by="12300"></count-up></div>
+            <div class="splash-green-coins">
+                <count-up count-to="12356" interval="1" increment-by="12300"></count-up>
+            </div>
         </div>
-            
-            
+
+
         <div class="splash-goal-container">
             <div class="splash-goal-message">You have not set your goal for this month. </div>
             <button class="button button-assertive button-full" ng-click="myGoal()">
-              Set Goal
+                Set Goal
             </button>
         </div>
     </ion-view>

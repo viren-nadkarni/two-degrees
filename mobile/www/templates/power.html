@@ -1,10 +1,9 @@
+<ion-view view-title="two&deg;">
+    <ion-content>
+        <ion-slide-box slide-tabs-scrollable="false" show-pager="false" ion-slide-tabs>
 
-<ion-view view-title="two&deg;" >
-<ion-content >
-    <ion-slide-box slide-tabs-scrollable="false" show-pager="false"  ion-slide-tabs>
-
-        <ion-slide ion-slide-tab-label="Live"  ng-controller="PowerCtrl">
-<!--
+            <ion-slide ion-slide-tab-label="Live" ng-controller="PowerCtrl">
+                <!--
             <div class="card" >
                 <div class="item item-divider">
                     Realtime Power Consumption 
@@ -14,100 +13,110 @@
                 </div>
             </div>
 -->
-            
-            <div class="progress-container">
-                <div id="myProgress">
-                    <div id="myBar">
-                        <div id="label">Your Progress</div>
+
+                <div class="progress-container">
+                    <div id="myProgress">
+                        <div id="myBar">
+                            <div id="label">Your Progress</div>
+                        </div>
+                        <i class="icon ion-leaf"></i>
                     </div>
-                    <i class="icon ion-leaf"></i>
                 </div>
-            </div>
-            
-            <div class="card" id="live-graph-container">
-                <div class="item item-divider">
-                    Realtime Power Consumption 
+
+                <div class="card" id="live-graph-container">
+                    <div class="item item-divider">
+                        Realtime Power Consumption
+                    </div>
+                    <div class="item item-text-wrap">
+                        <line-chart chart="chart" class="line-chart" series="series"></line-chart>
+                        <div><strong>Current utilization:</strong> {{currentPower}} W</div>
+                    </div>
                 </div>
-                <div class="item item-text-wrap">
-                    <line-chart chart="chart" class="line-chart" series="series"></line-chart>
-                    <div><strong>Current utilization:</strong> {{currentPower}} W</div>
-                </div>
-            </div>
-            <!--
+                <!--
             <div class="card" >
                 <div class="item item-text-wrap">
                     <div>Your power consumption for the past hour has been above average</div>
                 </div>
             </div>
             -->
-        </ion-slide>
-       
+            </ion-slide>
 
-         <ion-slide ion-slide-tab-label="Day"  ng-controller="PowerDayCtrl">
-		
-		<div class="card" id="day-graph-container">
-		<div class="item item-divider">
-                    Today's Consumption 
-                </div>
-                <div class="item item-text-wrap">
-                    
-					<div class="row">
-					  <div class="col"><button class="button" ng-click="previousDay()"> <i class="icon ion-arrow-left-b disabled"></i></button></div>
-					  <div class="col col-67 col-center text-center"><h3>{{date | date:'EEEE, MMM dd, yyyy'}}</h3></div>
-					  <div class="col"><button class="button" ng-class="disable"  ng-click="nextDay()"><i class="icon ion-arrow-right-b"></i></button></div>
-					</div>
-					<div id="chart" style="text-align: center;"></div>
-                </div>
-		</div>
-		</ion-slide>
-        <ion-slide ion-slide-tab-label="Month" ng-controller="PowerMonthCtrl">
-		<div class="card" id="day-graph-container">
-		<div class="item item-divider">
-                    How you are doing this month 
-                </div>
-				<div class="item item-text-wrap row" style="margin-top:10px;border-top:0px;">
-					  <div class="col"><button class="button " ng-click="previousMonth()"> <i class="icon ion-arrow-left-b disabled"></i></button></div>
-					  <div class="col col-67 col-center text-center"><h3>{{month | date:'MMMM, yyyy'}}</h3></div>
-					  <div class="col"><button class="button" ng-class="disable"  ng-click="nextMonth()"><i class="icon ion-arrow-right-b"></i></button></div>
-					</div>
-                <div class="item item-text-wrap row" style="text-align:center;margin-top:10px;border-top:0px;;">
-					
-                    <canvas id="lineGraph" height="325px" width="325px"></canvas>
-					<!--canvas id="bar" class="chart chart-line" data="graph.data" options="graph.options" labels="graph.labels" series='graph.series' colours='graph.colours' height="350"></canvas-->
-                </div>
-			
-			</div>
-		</ion-slide>
 
-        <ion-slide ion-slide-tab-label="Simulate" ng-controller="PowerYearCtrl">
-			
-			
-			
-			<div class="card" id="simulator-graph-container">
-		<div class="item item-divider">
-                    Commit Transactions
+            <ion-slide ion-slide-tab-label="Day" ng-controller="PowerDayCtrl">
+
+                <div class="card" id="day-graph-container">
+                    <div class="item item-divider">
+                        Today's Consumption
+                    </div>
+                    <div class="item item-text-wrap">
+
+                        <div class="row">
+                            <div class="col">
+                                <button class="button" ng-click="previousDay()"> <i class="icon ion-arrow-left-b disabled"></i></button>
+                            </div>
+                            <div class="col col-67 col-center text-center">
+                                <h3>{{date | date:'EEEE, MMM dd, yyyy'}}</h3></div>
+                            <div class="col">
+                                <button class="button" ng-class="disable" ng-click="nextDay()"><i class="icon ion-arrow-right-b"></i></button>
+                            </div>
+                        </div>
+                        <div id="chart" style="text-align: center;"></div>
+                    </div>
                 </div>
-                <div class="item item-text-wrap">
-                    
-					<div class="row" >
-						<div class="download-wrap">
-						  <div class="download">
-							<a href="#" class="button-download button-assertive button-custom-download" ng-click="commitDayEnd()">
+            </ion-slide>
+            <ion-slide ion-slide-tab-label="Month" ng-controller="PowerMonthCtrl">
+                <div class="card" id="day-graph-container">
+                    <div class="item item-divider">
+                        How you are doing this month
+                    </div>
+                    <div class="item item-text-wrap row" style="margin-top:10px;border-top:0px;">
+                        <div class="col">
+                            <button class="button " ng-click="previousMonth()"> <i class="icon ion-arrow-left-b disabled"></i></button>
+                        </div>
+                        <div class="col col-67 col-center text-center">
+                            <h3>{{month | date:'MMMM, yyyy'}}</h3></div>
+                        <div class="col">
+                            <button class="button" ng-class="disable" ng-click="nextMonth()"><i class="icon ion-arrow-right-b"></i></button>
+                        </div>
+                    </div>
+                    <div class="item item-text-wrap row" style="text-align:center;margin-top:10px;border-top:0px;;">
+
+                        <canvas id="lineGraph" height="325px" width="325px"></canvas>
+                        <!--canvas id="bar" class="chart chart-line" data="graph.data" options="graph.options" labels="graph.labels" series='graph.series' colours='graph.colours' height="350"></canvas-->
+                    </div>
+
+                </div>
+            </ion-slide>
+
+            <ion-slide ion-slide-tab-label="Simulate" ng-controller="PowerYearCtrl">
+
+
+
+                <div class="card" id="simulator-graph-container">
+                    <div class="item item-divider">
+                        Commit Transactions
+                    </div>
+                    <div class="item item-text-wrap">
+
+                        <div class="row">
+                            <div class="download-wrap">
+                                <div class="download">
+                                    <a href="#" class="button-download button-assertive button-custom-download" ng-click="commitDayEnd()">
 							  Commit
 							  <span class="icon-wrap">
 								<i class="icon-download"></i>
 							  </span>
 							</a>
-							<div class="meter">
-							  <span class="meter-progress"></span>
-							</div>
-						  </div>
-						</div>
-						<!--button id="reset">Reset</button-->
-					</div>
-				</div>
-            </div>
-		</ion-slide>
-    </ion-slide-box>
-</ion-content>
+                                    <div class="meter">
+                                        <span class="meter-progress"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--button id="reset">Reset</button-->
+                        </div>
+                    </div>
+                </div>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
 </ion-view>
