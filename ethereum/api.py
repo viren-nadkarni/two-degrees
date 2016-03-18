@@ -16,6 +16,8 @@ import lib
 
 app = Flask(__name__)
 flask.ext.cors.CORS(app)
+cors = flask.ext.cors.CORS(app, resources={r"/*": {"origins": "*"}})
+
 app.debug = True
 
 __author__ = 'viren'
@@ -24,7 +26,7 @@ __version__ = 'server-0.1'
 # parameters ##############################################
 
 rpc_endpoint = 'http://localhost:8545'
-master_wallet = directory['viren1']
+master_wallet = directory['twodegree01']
 contract_bytecode = None
 contract_address = None
 goals = None
@@ -246,8 +248,11 @@ def apirecord(coinbase):
         usage_list = []
 
         for r in db_results:
-            usage_list.append({"date": r[3][:10],
-                "value": get_usage_by_transaction_hash(r[0])})
+            try:
+                usage_list.append({"date": r[3][:10],
+                    "value": get_usage_by_transaction_hash(r[0])})
+            except:
+                pass
 
         return jsonify(coinbase=coinbase,
                 usage=usage_list)

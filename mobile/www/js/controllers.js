@@ -128,7 +128,7 @@ angular.module('starter.controllers', ['chart.js'])
                 "targetDate": "2016-3-1"
             };
 
-            $http.post('http://104.155.219.214:8080/goal/0x6015fb43e26226d80edc1c209ccd99ce2493497b', data, {
+            $http.post('http://twodegree01.cloudapp.net:8080/goal/0x23a6d6deb842656f49ee3e7b46921b44c92fa315', data, {
                     headers: {
                         "Content-Type": "application/json"
                     }
@@ -176,7 +176,7 @@ angular.module('starter.controllers', ['chart.js'])
     /***** google graph *****/
 
     var namespace = '/test'; // change to an empty string to use the global namespace
-    var ip = '104.155.219.214:8081';
+    var ip = 'twodegree01.cloudapp.net:8081';
     var socket = io.connect('http://' + ip + namespace);
 
     var items = [];
@@ -846,7 +846,7 @@ angular.module('starter.controllers', ['chart.js'])
             "quantity": Math.floor((Math.random() * 6) + 1),
             "date": "2016-3-1"
         };
-        $http.post('http://104.155.219.214:8080/usage/0x6015fb43e26226d80edc1c209ccd99ce2493497b', data, {
+        $http.post('http://twodegree01.cloudapp.net:8080/usage/0x23a6d6deb842656f49ee3e7b46921b44c92fa315', data, {
                 headers: {
                     "Content-Type": "application/json"
                 }

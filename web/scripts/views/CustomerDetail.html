@@ -1,0 +1,313 @@
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#/">Home</a></li>
+	<li class="active"><a href="#customerDetail/{{customerId}}">User
+			Details</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap" style="height: 700px;">
+	<div class="row row-eq-height">
+        <div class="col-md-4">
+
+			<div class="panel panel-default" id="profilePanel">
+				<div class="panel-body profile" style="" >
+					<div class="profile-image">
+						<img src="assets/images/users/user-default.png" alt="{{customer.name}}" />
+					</div>
+					<div class="profile-data">
+						<div class="profile-data-name" style="color: #000;">Durgadas Kamath</div>
+						<div class="profile-data-title" style="color: #000;">Goa</div>
+					</div>
+
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12">
+							<button class="btn btn-info btn-block">
+								<span class="fa fa-check"></span> ProActive
+							</button>
+						</div>
+						
+					</div>
+				</div>
+
+
+			</div>
+
+		</div>
+		<div class="col-md-4">
+			<div class="panel" id="chartPanel">
+				<div class="panel-heading">
+					<h4>Monthly Goal Tracking : March 2016</h4>
+				</div>
+				<div class="panel-body">
+
+					<canvas id="pie" class="chart chart-doughnut" chart-data="pieData"
+						chart-labels="pieLabels" chart-legend="true">
+                            </canvas>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="col-md-4">
+			<div class="panel" id="rewardPanel">
+				<div class="panel-heading">
+					<h4>Rewards & Badges</h4>
+                    <a id="greencoinBalance" href="#/customerDetail/{{customerId}}" class="tile tile-success">
+                                {{greencoinBalance}}
+                    <p>Green Coins</p>                            
+                    <div class="informer informer-success dir-tr"></div>
+                    </a>
+                    <a href="#/customerDetail/{{customerId}}" class="tile tile-default messages-img">
+                       <div class="row">
+                           <div style=" float: left;">
+                                <div class="user">
+                                    <img src="assets/images/badges/badge1.png" alt="Environment Friendly" class="img-responsive center-block" style="margin: 0 auto;">
+                                    <span class="label label-success">Env. Friendly</span>
+                                </div>
+                               <!--//Environment Friendly-->
+                            </div>
+                           <div style=" float: left;">
+                                <div class="user">
+                                    <img src="assets/images/badges/badge2.png" alt="Highly Efficient" class="img-responsive center-block" style="margin: 0 auto;">
+                                    <span class="label label-success">Highly Efficient</span>
+                                </div>
+                              <!-- Saver Boost-->
+                           </div>
+                           <div style=" float: left;">
+                                <div class="user">
+                                    <img src="assets/images/badges/badge3.png" alt="Plug Doctor" class="img-responsive center-block" style="margin: 0 auto;">
+                                    <span class="label label-success">Plug Doctor</span>
+                                </div>
+                               <!--Experience-->
+                           </div>
+                        </div> 
+                    <div class="informer informer-success dir-tr"></div>
+                    </a>
+				</div>
+                
+				<div class="panel-body">
+					
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+    <div class="row">
+        
+        <div class="col-lg-4">
+            <div class="panel panel-default" id="contractPanel">
+
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Contract : March 2016 </h3> 
+                    </div>
+                    <div class="panel-body">
+                        <button class="btn btn-info btn-block" data-toggle="modal" data-target="#modal_{{contract.contractAddress}}">{{contract.contractAddress}}</button>
+                    </div>
+                
+                    <div class="modal" id="modal_{{contract.contractAddress}}" tabindex="-1" role="dialog" aria-labelledby="largeModalHead" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title" id="largeModalHead"  style="font-size:12px;">Contract # : {{contract.contractAddress}}</h4>
+                                            <button class="btn btn-success btn-rounded" disabled><span class="fa fa-check"></span>Verified</button>
+                                        </div>
+                                        <div class="modal-body" style="font-size:12px">
+                                                <pre class="text-left" style="font-size:12px !important">contract Carboncoin<br>{<br>struct Goal <br>{<br>uint goalTimestamp;<br>uint goalUsage;<br>uintcurrentCumulativeUsage;<br>uint previousCumulativeUsage;<br>}<br>/* TODO: carboncoin conversion rate?*/<br>mapping (address => Goal) internal goals;<br> /* to maintain goals/usage */<br>mapping (address => uint) internalledger;<br> /* to maintain carbon coin balance */<br>address public master;<br>event earnCoin(address target,uint amount);<br>event spendCoin(address target, uint amount);<br>function Carboncoin() <br>{<br>master =msg.sender;<br>}<br>function balance()<br> public constant returns (uint) <br>{<br>return ledger[msg.sender];<br>}<br>functionbalance(address wallet) <br>public constant returns (uint) <br>{<br>returnledger[wallet];<br>}<br>function credit(address target, uint amount) <br>public <br>{<br>ledger[target] +=amount;<br>earnCoin(target, amount);<br>}<br>function debit(address target, uint amount)<br> public <br>{<br>ledger[target] -=amount;<br>spendCoin(target, amount);<br>}<br>/* TODO: limit access to below method to owner */<br>functionsetGoal(addresstarget, uint goalTimestamp, uint goalUsage) <br>{<br>goals[target].goalTimestamp =goalTimestamp;<br>goals[target].goalUsage = goalUsage;<br>}<br>function getGoal(address coinbase) <br>returns (uint)<br>{<br>return goals[coinbase].goalUsage;<br>}<br>function recordUsage(address target, uint usage)<br>{<br>goals[target].currentCumulativeUsage += usage;<br>}<br>function checkGoal(address target, uint currentTimestamp)<br>returns (bool) <br>{<br>uint goalTimestamp = goals[target].goalTimestamp;<br>uint goalUsage =goals[target].goalUsage;<br>uint totalUsage = goals[target].currentCumulativeUsage - goals[target].previousCumulativeUsage;<br>/*if (currentTimestamp >= goalTimestamp) <br>{<br> */<br>if (totalUsage <goalUsage) <br>{credit(target, totalUsage - goalUsage);<br>return true;<br>} <br>/*else <br>{<br>debit(target, goalUsage -totalUsage);<br>return false;<br>}<br>*//* TODO: add logic to reset goals */<br>goals[target].previousCumulativeUsage=goals[target].currentCumulativeUsage;<br>}<br>}                                             
+                                                
+                                                </pre>
+                                                
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                        
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                    
+
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="panel panel-default" id="committmentPanel">
+
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Committment : March 2016 </h3> 
+                    </div>
+                    <div class="panel-body">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" style="width: 67%">
+                                67%
+                            </div>
+                                        
+                            <div class="progress-bar progress-bar-success" style="width: 33%">
+                                33%
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+        
+        <div class="col-md-4" >
+            <div class="panel panel-default" id="currentEarningPanel">
+
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Wallet ID </h3> 
+                    </div>
+                    <div class="panel-body" style="font-size:14px !important; word-wrap: break-word;">
+                        {{customerId}}
+                    </div>
+                    
+
+            </div>
+        </div>
+    
+    </div>
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Transactions Data</h3>
+					<ul class="panel-controls">
+						<!--<li><a href="#" class="panel-collapse"><span
+								class="fa fa-angle-down"></span></a></li>
+						<li><a href="#" class="panel-refresh"><span
+								class="fa fa-refresh"></span></a></li>
+						<li><a href="#" class="panel-remove"><span
+								class="fa fa-times"></span></a></li>-->
+					</ul>
+				</div>
+                
+                
+				<div class="panel-body">
+					<table class="table datatable" id="transactionDataTable">
+						<thead>
+							<tr>
+                                <th>Transaction ID</th>
+								<th>Date</th>
+<!--								<th>Usage (kWh)</th>-->
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="transaction in transactions">
+                                
+                                <td style="word-wrap: break-word;">{{transaction.hash | limitTo:10}}&hellip;</td>
+                                <td><button  style="font-size:15px;" class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.timestamp | limitTo:10}}</button></td>
+                                <!--td><button  style="font-size:15px;" class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_{{transaction.hash}}">{{transaction.value}}</button></td-->
+                                <td> <button class="btn btn-success btn-rounded" data-toggle="modal" data-target="#modal_{{transaction.hash}}"><span class="fa fa-check"></span>Verified</button> 
+                                
+                                <div class="modal" id="modal_{{transaction.hash}}" tabindex="-1" role="dialog" aria-labelledby="largeModalHead" aria-hidden="true" >
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title" id="largeModalHead">Transaction Details </h4>
+                                            <button class="btn btn-success btn-rounded" disabled><span class="fa fa-check"></span>Verified</button>
+                                        </div>
+                                        <div class="modal-body" style="word-wrap: break-word;">
+                                           
+                                            <div class="row">
+                                                <div class="col-md-2 modal-title"><h3>Trx #:</h3></div>
+                                                <div class="col-md-10 modal-desc text-wrap"><h3>{{transaction.hash}}</h3></div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-2 modal-title"><h3>Block #:</h3></div>
+                                                <div class="col-md-10 modal-desc"><h3>{{transaction.blockNumber}}</h3></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2 modal-title">
+                                                <h3>Time :</h3>
+                                                </div>
+                                                <div class="col-md-10 modal-desc">
+                                                <h3>{{transaction.timestamp}}</h3>
+                                                </div>
+                                            </div>  
+                                            <div class="row">
+                                                <div class="col-md-2 modal-title">
+                                                <h3>From:</h3>
+                                                </div>
+                                                <div class="col-md-10 modal-desc">
+                                                <h3>{{transaction.from}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2  modal-title">
+                                                <h3>To:</h3>
+                                                </div>
+                                                <div class="col-md-10  modal-desc">
+                                                <h3>{{transaction.to}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2  modal-title">
+                                                <h3>Daily Usage:</h3>
+                                                </div>
+                                                <div class="col-md-10 modal-desc">
+                                                <h3>{{transaction.value}}</h3>
+                                                </div>
+                                            </div>
+                                             <div class="row">
+                                                <div class="col-md-2 modal-title">
+                                                <h3>Gas Price:</h3>
+                                                </div>
+                                                <div class="col-md-10 modal-desc">
+                                                <h3>{{transaction.gasPrice}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2 modal-title">
+                                                <h3>Gas Used:</h3>
+                                                </div>
+                                                <div class="col-md-10 modal-desc">
+                                               <h3>{{transaction.gas}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2 modal-title">
+                                                <h3>Tx Price:</h3>
+                                                </div>
+                                                <div class="col-md-10 modal-desc ">
+                                               <h3>{{transaction.gasPrice}}</h3>
+                                                </div>
+                                            </div>
+                                          
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                        
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                </td>
+								
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- END DEFAULT DATATABLE -->
+
+		</div>
+
+	</div>
+</div>
+
+
+

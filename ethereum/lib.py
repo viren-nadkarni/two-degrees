@@ -16,9 +16,14 @@ def get_all_blocks_txns(to_address=None):
     last_block_id=get_latest_block()
     last_block_id=str(last_block_id['result']['number'])
     #print "last block %s" % last_block_id
-    block_number=1
-    for block_number in range(1,int(last_block_id,0)+1):
+    #block_number=1
+    start=int(last_block_id,0) - 100
+    if start < 0:
+        start=1
+    block_number=start
+    for block_number in range(start,int(last_block_id,0)+1):
         get_all_tx(block_number,to_address)
+    all_txns.reverse()
     return all_txns
 
 def get_all_tx(block_id,to_address=None):

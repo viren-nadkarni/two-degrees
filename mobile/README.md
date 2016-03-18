@@ -1,15 +1,10 @@
-Ionic Tabs + SideMenu
-===================
+# two-degrees app
 
-This is a starter app for those wishing to have both tabs and a side menu using the Ionic Framework.
+### installing and running
 
-[Demo](http://codepen.io/loringdodge/pen/vOrRpV)
+	# make sure node is installed
+	npm install
+	npm install -g ionic cordova
 
-![Screenshot](screenshots/iphone.png)
-
-
-
-
-
-
-
+	# run the development server
+	ionic serve -a -p PORT --nolivereload

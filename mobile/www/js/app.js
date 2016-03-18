@@ -8,15 +8,14 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive', 'chart.js', 'ngMaterial'])
 
 .run(function ($ionicPlatform, $location) {
-    console.log("outside ready");
+    
     localStorage.setItem('setGoal', '0');
     $ionicPlatform.ready(function () {
-        console.log("inside ready");
+        
+        $location.url('/splash');
+        
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
-        console.log("before splash");
-        $location.url('/splash');
-        console.log("after splash");
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
@@ -24,13 +23,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive', 
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-
-
-        //      var isGoalSet = localStorage.getItem('isGoalSet');
-        //      console.log(isGoalSet);
-        //      if (!isGoalSet || isGoalSet == null || isGoalSet == false) {
-        //        $location.url('/splash');
-        //      }
 
     });
 
@@ -76,8 +68,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directive', 
         url: "/fuel",
         views: {
             'tab-fuel': {
-                templateUrl: "templates/fuel.html",
-                controller: 'PlaylistsCtrl'
+                templateUrl: "templates/fuel.html"
             }
         }
     })

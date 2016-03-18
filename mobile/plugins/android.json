@@ -1,0 +1,18 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-websocket": {
+            "PACKAGE_NAME": "com.codeminers.twodegrees"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.codeminers.twodegrees"
+        }
+    },
+    "dependent_plugins": {}
+}
