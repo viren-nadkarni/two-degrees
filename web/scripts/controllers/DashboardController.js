@@ -5,8 +5,8 @@
  * @constructor
  * @param $scope {angular}
  */
-app.controller('DashboardController', ['$scope', '$rootScope','$http','remoteService','$location'
-       	                           	,function($scope, $rootScope ,$http,  remoteService,$location) {
+app.controller('DashboardController', ['$scope', '$rootScope','$http','remoteService','$location','dashboardService'
+       	                           	,function($scope, $rootScope ,$http,  remoteService,$location,dashboardService) {
   $.blockUI({ 
             message: 'Please Wait ...',
             css: { 
@@ -117,18 +117,15 @@ data.usageStats = {
 								
                                 });
                                         
-    $http({
-        method: 'GET',
-        url: 'http://twodegree01.cloudapp.net/topscore'
-        }).then(function successCallback(response) {
-           // console.log(response);
+                                      
+                           
+        dashboardService.topscorer(function (response) {
             $scope.customerData = response.data.slice(0,2);
             $.unblockUI(); 
-        }, function errorCallback(response) {
+        },
+        function errorCallback(response) {
             $scope.customerData = {};
-        });                                   
-                                        
-
+        });
    
 	
 

@@ -13,3 +13,7 @@ app.factory('remoteService', function (configService, restServiceProxy, $http) {
 app.factory('customerService', function (configService, restServiceProxy){
    return new CustomerRestService(configService,restServiceProxy);
 });
+
+app.factory('dashboardService', function (configService, restServiceProxy){
+   return new DashboardService(configService,restServiceProxy);
+});

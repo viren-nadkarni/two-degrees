@@ -9988,10 +9988,10 @@ app.controller('globalImpactController', ['$scope'
         if (typeof emissions_formatted[emissions[i][2]] == "undefined") {
           emissions_formatted[emissions[i][2]] = [[ "Country", "Emissions", "Year"]]; 
         }
-        //console.log(emissions_formatted);
+
         emissions_formatted[emissions[i][2]].push(emissions[i]);
     }
-    console.log(emissions_formatted);
+
       function drawRegionsMap(year) {
         year = year || "1960";
         var data = google.visualization.arrayToDataTable(emissions_formatted[year]);

@@ -23,29 +23,7 @@ app.controller('CustomerController', ['$scope','$http', '$rootScope','customerSe
             }
             
   }); 
-                                        
-                           
-    /*customerService.getCustomerList(function(httpcode,data){
-        console.log(status);
-    },function(httpcode,data){
-        console.error(httpcode);
-    });
-    
-    0	January
-    1	February
-    2	March
-    3	April
-    4	May
-    5	June
-    6	July
-    7	August
-    8	September
-    9	October
-    10	November
-    11	December
-
-    */
-                                        
+                                   
     var monthNames = {
          1	: "January",
          2	: "February",
@@ -62,34 +40,6 @@ app.controller('CustomerController', ['$scope','$http', '$rootScope','customerSe
     };                                    
     
     $scope.customerId =  $routeParams.customerId;                                     
-    /*customerService.getCustomer($scope.customerId,function(httpcode,data){
-          
-        $scope.customer = data[0];
-        $scope.customerTransactionsMonths = [];
-        $scope.monthValues = {};
-        $scope.monthValues = [];
-        console.log(data[0].transactions.energy);
-        angular.forEach(data[0].transactions.energy, function(record, rkey) {
-            
-            var monthYear = monthNames[record.month] + ' ' + record.year;
-            
-            $scope.customerTransactionsMonths.push({
-                "usage" : record.usage,
-                "monthYear" : monthYear
-            });
-            
-            angular.forEach(record.daily_values, function(value, key) {
-                
-                $scope.monthValues.push(record.daily_values);
-
-            });
-        });
-        //console.log($scope.monthValues);
-        
-        $.unblockUI(); 
-    },function(httpcode,data){
-        
-    });*/
                                         
     customerService.getCustomerStats($scope.customerId,function(httpcode,data){
         $scope.greencoinBalance = data.carboncoinBalance;
@@ -103,20 +53,14 @@ app.controller('CustomerController', ['$scope','$http', '$rootScope','customerSe
     });
                                         
     customerService.getCustomerTransactions($scope.customerId,function(httpcode,data){
-        
         $scope.transactions = data.transactions;
-        //console.log($scope.transactions);
     },function(httpcode,data){
-       // console.error(httpcode);
         $.unblockUI();
         $scope.showMessage('info',SERVER_FAILURE);
         
     });
                                         
     customerService.getContract(function(httpcode,data){
-     //   console.log(data);
-     //   console.log("zZZZ")
-     //   console.log(data.contractBytecode.Carboncoin.info.source);
         $scope.contract = data;
         $.unblockUI();
     },function(httpcode,data){
@@ -153,14 +97,9 @@ app.controller('CustomerController', ['$scope','$http', '$rootScope','customerSe
       maxHeight = rewardPanelHeight;
   }                                        
                                         
-// rewardPanel, chartPanel  profilePanel
-//    $("#profilePanel").height(maxHeight);
-//    $("#chartPanel").height(maxHeight);
-//    $("#rewardPanel").height(maxHeight);
-                                        
+
   maxHeight = 0;
-                                        
-//contractPanel, committmentPanel, currentEarningPanel                
+                                                    
                                         
 maxHeight = $("#contractPanel").height();                  
 
@@ -174,9 +113,6 @@ var currentEarningPanelHeight = $("#currentEarningPanel").height();
       maxHeight = currentEarningPanelHeight;
   }    
   
-    //$("#contractPanel").height(maxHeight);
-    //$("#committmentPanel").height(maxHeight);
-    //$("#currentEarningPanel").height(maxHeight);
 
 }]);
 	
