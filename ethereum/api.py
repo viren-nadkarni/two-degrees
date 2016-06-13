@@ -26,7 +26,7 @@ __version__ = 'server-0.1'
 # parameters ##############################################
 
 rpc_endpoint = 'http://localhost:8545'
-master_wallet = directory['twodegree01']
+master_wallet = directory['td1']
 contract_bytecode = None
 contract_address = None
 goals = None
@@ -39,7 +39,7 @@ curs = conn.cursor()
 
 eth = ethjsonrpc.EthJsonRpc('127.0.0.1', 8545)
 
-# wrappers ################################################
+# helpers #################################################
 
 def log(message):
     print ' * ' + str(message)
@@ -152,23 +152,28 @@ def init_contract():
     # initiate contract
     contract_address = create_contract(contract_bytecode, master_wallet)
 
+# delete `pickle.store` when fresh blockchain is deployed
 try:
     contract_bytecode, contract_address = pickle.load(open('pickle.store', 'r'))
 except:
     init_contract()
     pickle.dump((contract_bytecode, contract_address), open('pickle.store', 'w'))
+
+# temporary: serialize goals
 try:
-    goals = pickle.load(open('dump.pickle', 'r'))
+    goals = pickle.load(open('goals.store', 'r'))
 except:
     goals = dict()
-    pickle.dump(goals, open('dump.pickle', 'w'))
+    pickle.dump(goals, open('goals.store', 'w'))
+
+# temporary: serialize greencoin ledger
 try:
-    ledger = pickle.load(open('lock.bin', 'r'))
+    ledger = pickle.load(open('ledger.store', 'r'))
 except:
     ledger = dict()
     for wallet in directory.keys():
         ledger[wallet] = 0
-    pickle.dump(ledger, open('lock.bin', 'w'))
+    pickle.dump(ledger, open('ledger.store', 'w'))
 
 # routes ##################################################
 
@@ -196,10 +201,10 @@ def stats():
 @app.route('/stats/<coinbase>')
 def statscoinbase(coinbase):
 # debug
-    return jsonify(coinbase=coinbase,
-            carboncoinBalance=1234,
-            lifetimeUsage=(1.0*get_balance(coinbase))/10**9,
-            transactions=get_transaction_count(coinbase))
+#    return jsonify(coinbase=coinbase,
+#            carboncoinBalance=1234,
+#            lifetimeUsage=(1.0*get_balance(coinbase))/10**9,
+#            transactions=get_transaction_count(coinbase))
 # debug
 
     try:
@@ -271,7 +276,7 @@ def apigoal(coinbase):
                 [coinbase, target_usage, timestamp])
         log('contract updated')
         goals[coinbase] = ':'.join([coinbase, str(target_usage), str(timestamp)])
-        pickle.dump(goals, open('dump.pickle', 'w'))
+        pickle.dump(goals, open('goals.store', 'w'))
 
         return jsonify(status='success')
 
@@ -288,6 +293,7 @@ def apigoal(coinbase):
 def apigoalcheck(coinbase):
     # check if goal has been met
     # if yes, distribute reward
+    # disabled temporarily
     abort(501)
     try:
         eth.call_with_transaction(eth.eth_coinbase(),
@@ -298,6 +304,12 @@ def apigoalcheck(coinbase):
         pass
     finally:
         ledger[coinbase] += 10
+
+@app.route('/transfer')
+def transfer():
+    # transfer greencoins to a specified wallet
+    if request.method == 'POST':
+        pass
 
 @app.route('/logs/transactions')
 def gettx():

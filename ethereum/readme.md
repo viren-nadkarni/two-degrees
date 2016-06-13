@@ -104,3 +104,23 @@ Response
   "contractAddress": "0xdaa24d02bad7e9d6a80106db164bad9399a0423e"
 }
 
+`POST /transfer` Transfer greencoins to a wallet
+----------------------------------------------------
+
+Request
+```
+curl localhost:8080/transfer \
+-H 'content-type:application/json' \
+-X POST -d '
+{
+    "sender": "0xf12ade7ad5f18ffcc8b3fc74061a735363d5dbef",
+    "recipient": "0xf70f85cbeff885d498d0fc2ac92eb78fd05874e2",
+    "amount": 42
+}'
+```
+Response
+```
+{
+  "transaction": "0xdaa24d02bad7e9d6a80106db164bad9399a0423e"
+}
+```

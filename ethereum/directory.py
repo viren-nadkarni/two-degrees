@@ -1,4 +1,4 @@
 directory = {
-  'twodegree01': '0x23a6d6deb842656f49ee3e7b46921b44c92fa315',
-  'twodegree02': '0xa50b022e1c93f2b4861408d82c15bbc4a0496d14'
+  'td1': '0xc40598d33d2d0dc1b5b47a0eca35972f14276c07',
+  'td2': '0x370eca51a0a4fbc196ea03e253661aeb5ed63fd3'
 }
