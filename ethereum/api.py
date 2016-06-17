@@ -42,40 +42,45 @@ eth = ethjsonrpc.EthJsonRpc(rpc_endpoint.split(':')[1][2:],
 
 # helpers #################################################
 
+
 def log(message):
     print ' * ' + str(message)
 
+
 def get_transaction_count(coinbase):
-    data = {"jsonrpc":"2.0",
-            "method":"eth_getTransactionCount",
-            "params":[coinbase, "latest"],
-            "id":1}
+    data = {"jsonrpc": "2.0",
+            "method": "eth_getTransactionCount",
+            "params": [coinbase, "latest"],
+            "id": 1}
 
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
     return int(response["result"], 16)
 
+
 def get_usage_by_transaction_hash(tx_hash):
-    data = {"jsonrpc":"2.0",
-            "method":"eth_getTransactionByHash",
-            "params":[tx_hash],
-            "id":1}
+    data = {"jsonrpc": "2.0",
+            "method": "eth_getTransactionByHash",
+            "params": [tx_hash],
+            "id": 1}
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
     return (1.0*int(response["result"]["value"], 16))/(10**9)
 
+
 def get_balance(coinbase):
-    data = {"jsonrpc":"2.0",
-            "method":"eth_getBalance",
-            "params":[coinbase, "latest"],
-            "id":1}
+    data = {"jsonrpc": "2.0",
+            "method": "eth_getBalance",
+            "params": [coinbase, "latest"],
+            "id": 1}
 
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
     return int(response["result"], 16)
 
+
 def get_block(block_number):
-    data = {"jsonrpc":"2.0",
-            "method":"eth_getBlockByNumber",
-            "params":[block_number, True],
-            "id":1}
+    data = {"jsonrpc": "2.0",
+            "method": "eth_getBlockByNumber",
+            "params": [block_number, True],
+            "id": 1}
 
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
     result = {"difficulty": int(response["result"]["difficulty"], 16),
@@ -84,12 +89,15 @@ def get_block(block_number):
             "timestamp": int(response["result"]["timestamp"], 16)}
     return result
 
+
 def send_transaction(tx_from, tx_to, tx_amt):
-    data = {"jsonrpc":"2.0",
-            "method":"eth_sendTransaction",
-            "params":[{"from":tx_from,
-                "to":tx_to,
-                "value":tx_amt}],"id":1}
+    data = {"jsonrpc": "2.0",
+            "method": "eth_sendTransaction",
+            "params": [{
+                "from": tx_from,
+                "to": tx_to,
+                "value": tx_amt}],
+            "id": 1}
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
     try:
         log(response['error']['message'])
@@ -97,6 +105,7 @@ def send_transaction(tx_from, tx_to, tx_amt):
     except:
         log('tx for {} requested'.format(tx_to))
     return response["result"]
+
 
 def compile_solidity(source):
     #data = {"jsonrpc":"2.0",
@@ -114,15 +123,16 @@ def compile_solidity(source):
     log("Bytecode compiled")
     return {"bin": binout, "abi": abiout}
 
+
 def create_contract(bytecode, coinbase):
-    data = {"jsonrpc":"2.0",
-            "method":"eth_sendTransaction",
-            "params":[{
+    data = {"jsonrpc": "2.0",
+            "method": "eth_sendTransaction",
+            "params": [{
                 "from": coinbase,
                 "data": bytecode,
-                "gas":1000000,
+                "gas": 1000000,
             }],
-            "id":1}
+            "id": 1}
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
     try:
         response["result"]
@@ -131,29 +141,29 @@ def create_contract(bytecode, coinbase):
         abort(500)
     log("Contract initiated")
 
-    data2 = {"jsonrpc":"2.0",
-            "method":"eth_getTransactionReceipt",
-            "params":[
-                response['result']
-            ],"id":1}
+    data2 = {"jsonrpc": "2.0",
+            "method": "eth_getTransactionReceipt",
+            "params": [response['result']],
+            "id": 1}
 
     # wait while the contract is being mined
     log("Waiting for contract to be mined")
     while True:
         response2 = json.loads(requests.post(rpc_endpoint, data=json.dumps(data2)).text)
-        if response2['result'] != None:
+        if response2['result'] is not None:
             break
         time.sleep(2)
     log("Contract mined at {}".format(response2['result']['contractAddress']))
 
     return response2['result']['contractAddress']
 
+
 def init_contract():
     global contract_bytecode
     global contract_address
 
     # set the goal (create the contract)
-    contract_source = ''.join( [ line.strip() for line in open('../ethereum/contract.sol', 'r').readlines()] )
+    contract_source = ''.join([line.strip() for line in open('../ethereum/contract.sol', 'r').readlines()])
 
     # compile contract bytecode
     contract_bytecode = compile_solidity(contract_source)
@@ -178,9 +188,11 @@ except:
 
 # routes ##################################################
 
+
 @app.route('/')
 def apiindex():
     return jsonify(version=__version__)
+
 
 @app.route('/reset')
 def apireset():
@@ -190,6 +202,7 @@ def apireset():
     init_contract()
     pickle.dump((contract_bytecode, contract_address), open('contract.pickle', 'w'))
     return jsonify({'status': 'success'})
+
 
 @app.route('/stats')
 def stats():
@@ -203,6 +216,7 @@ def stats():
     return jsonify(totalTransactions=transactions,
             latestBlock=latest_block)
 
+
 @app.route('/stats/<coinbase>')
 def statscoinbase(coinbase):
     carboncoin_balance = eth.call(contract_address, 'balanceOf(address)', [coinbase], ['uint256'])[0]
@@ -211,6 +225,7 @@ def statscoinbase(coinbase):
             carboncoinBalance=carboncoin_balance,
             lifetimeUsage=(1.0*get_balance(coinbase))/10**9,
             transactions=get_transaction_count(coinbase))
+
 
 @app.route('/usage/<coinbase>', methods=['GET', 'POST'])
 def apirecord(coinbase):
@@ -257,6 +272,7 @@ def apirecord(coinbase):
         return jsonify(coinbase=coinbase,
                 usage=usage_list)
 
+
 @app.route('/goal/<coinbase>', methods=['GET', 'POST'])
 def apigoal(coinbase):
     if request.method == 'POST':
@@ -287,6 +303,7 @@ def apigoal(coinbase):
 
         return jsonify(goalUsage=goal_usage)
 
+
 @app.route('/goal/check/<coinbase>')
 def apigoalcheck(coinbase):
     # check if goal has been met
@@ -302,6 +319,7 @@ def apigoalcheck(coinbase):
     except:
         pass
 
+
 @app.route('/transfer', methods=['POST'])
 def transfer():
     # transfer greencoins to a specified wallet
@@ -311,21 +329,26 @@ def transfer():
         sender = request_data['sender']
         receiver = request_data['recipient']
         amount = int(request_data['amount'])
+
+        eth.call_with_transaction(eth.eth_coinbase(),
+                        contract_address,
+                        'debit(address,uint256)', [sender, amount])
         eth.call_with_transaction(eth.eth_coinbase(), 
                         contract_address,
-                        'debit(address,uint256)', [sender,amount])
-        eth.call_with_transaction(eth.eth_coinbase(), 
-                        contract_address,
-                        'credit(address,uint256)', [receiver,amount])
+                        'credit(address,uint256)', [receiver, amount])
+
         return jsonify(status='success')
+
 
 @app.route('/logs/transactions')
 def gettx():
     return jsonify(transactions=lib.get_all_blocks_txns())
 
+
 @app.route('/logs/transactions/<coinbase>')
 def getwallettx(coinbase):
     return jsonify(transactions=lib.get_all_blocks_txns(coinbase))
+
 
 @app.route('/contract')
 def contractapi():
@@ -336,4 +359,3 @@ def contractapi():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
-
