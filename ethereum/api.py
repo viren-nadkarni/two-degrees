@@ -7,6 +7,7 @@ import time
 import datetime
 import sqlite3
 import ethjsonrpc
+import subprocess
 
 from flask import *
 import flask.ext.cors
@@ -30,14 +31,14 @@ master_wallet = directory['td1']
 contract_bytecode = None
 contract_address = None
 goals = None
-ledger = None
 
 # initializers ############################################
 
 conn = sqlite3.connect('server.db', check_same_thread=False)
 curs = conn.cursor()
 
-eth = ethjsonrpc.EthJsonRpc('127.0.0.1', 8545)
+eth = ethjsonrpc.EthJsonRpc(rpc_endpoint.split(':')[1][2:],
+                            int(rpc_endpoint.split(':')[2]))
 
 # helpers #################################################
 
@@ -98,21 +99,28 @@ def send_transaction(tx_from, tx_to, tx_amt):
     return response["result"]
 
 def compile_solidity(source):
-    data = {"jsonrpc":"2.0",
-            "method":"eth_compileSolidity",
-            "params":[source],"id":1}
+    #data = {"jsonrpc":"2.0",
+    #        "method":"eth_compileSolidity",
+    #        "params":[source],"id":1}
+    #
+    #response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
+    #return response['result']
 
-    response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
+    # using subprocess as a workaround because recent solc & RPC has issues
+
+    binout = subprocess.check_output(["solc", "--bin", "contract.sol"])
+    abiout = subprocess.check_output(["solc", "--abi", "contract.sol"])
 
     log("Bytecode compiled")
-    return response['result']
+    return {"bin": binout, "abi": abiout}
 
 def create_contract(bytecode, coinbase):
     data = {"jsonrpc":"2.0",
             "method":"eth_sendTransaction",
             "params":[{
                 "from": coinbase,
-                "data": bytecode['Carboncoin']['code']
+                "data": bytecode,
+                "gas":1000000,
             }],
             "id":1}
     response = json.loads(requests.post(rpc_endpoint, data=json.dumps(data)).text)
@@ -130,12 +138,13 @@ def create_contract(bytecode, coinbase):
             ],"id":1}
 
     # wait while the contract is being mined
+    log("Waiting for contract to be mined")
     while True:
         response2 = json.loads(requests.post(rpc_endpoint, data=json.dumps(data2)).text)
         if response2['result'] != None:
             break
-        time.sleep(1)
-    log("Contract mined")
+        time.sleep(2)
+    log("Contract mined at {}".format(response2['result']['contractAddress']))
 
     return response2['result']['contractAddress']
 
@@ -150,30 +159,22 @@ def init_contract():
     contract_bytecode = compile_solidity(contract_source)
 
     # initiate contract
-    contract_address = create_contract(contract_bytecode, master_wallet)
+    contract_address = create_contract(contract_bytecode['bin'].split('\n')[3], master_wallet)
 
-# delete `pickle.store` when fresh blockchain is deployed
+# remember to delete `contract.pickle' when fresh blockchain is deployed
 try:
-    contract_bytecode, contract_address = pickle.load(open('pickle.store', 'r'))
+    contract_bytecode, contract_address = pickle.load(open('contract.pickle', 'r'))
+    log("Using existing contract at {}".format(contract_address))
 except:
     init_contract()
-    pickle.dump((contract_bytecode, contract_address), open('pickle.store', 'w'))
+    pickle.dump((contract_bytecode, contract_address), open('contract.pickle', 'w'))
 
-# temporary: serialize goals
+# debug: serialize goals
 try:
-    goals = pickle.load(open('goals.store', 'r'))
+    goals = pickle.load(open('goals.pickle', 'r'))
 except:
     goals = dict()
-    pickle.dump(goals, open('goals.store', 'w'))
-
-# temporary: serialize greencoin ledger
-try:
-    ledger = pickle.load(open('ledger.store', 'r'))
-except:
-    ledger = dict()
-    for wallet in directory.keys():
-        ledger[wallet] = 0
-    pickle.dump(ledger, open('ledger.store', 'w'))
+    pickle.dump(goals, open('goals.pickle', 'w'))
 
 # routes ##################################################
 
@@ -184,7 +185,11 @@ def apiindex():
 @app.route('/reset')
 def apireset():
     # recreate the contract?
+    # disabled
     abort(501)
+    init_contract()
+    pickle.dump((contract_bytecode, contract_address), open('contract.pickle', 'w'))
+    return jsonify({'status': 'success'})
 
 @app.route('/stats')
 def stats():
@@ -200,17 +205,7 @@ def stats():
 
 @app.route('/stats/<coinbase>')
 def statscoinbase(coinbase):
-# debug
-#    return jsonify(coinbase=coinbase,
-#            carboncoinBalance=1234,
-#            lifetimeUsage=(1.0*get_balance(coinbase))/10**9,
-#            transactions=get_transaction_count(coinbase))
-# debug
-
-    try:
-        carboncoin_balance = eth.call(contract_address, 'balance(address)', [coinbase], ['uint64'])[0]
-    except:
-        carboncoin_balance = 0
+    carboncoin_balance = eth.call(contract_address, 'balanceOf(address)', [coinbase], ['uint256'])[0]
 
     return jsonify(coinbase=coinbase,
             carboncoinBalance=carboncoin_balance,
@@ -272,20 +267,23 @@ def apigoal(coinbase):
 
         eth.call_with_transaction(eth.eth_coinbase(),
                 contract_address,
-                'setGoal(address,uint64,uint64)',
+                'setGoal(address,uint256,uint256)',
                 [coinbase, target_usage, timestamp])
         log('contract updated')
         goals[coinbase] = ':'.join([coinbase, str(target_usage), str(timestamp)])
-        pickle.dump(goals, open('goals.store', 'w'))
+        pickle.dump(goals, open('goals.pickle', 'w'))
 
         return jsonify(status='success')
 
     elif request.method == 'GET':
         try:
-            goal_usage = eth.call(contract_address, 'getGoal(address)', [coinbase], ['uint64'])
+            goal_usage = eth.call(contract_address, 'getGoal(address)', [coinbase], ['uint256'])
+
+        ## debug
         except:
             print goals[coinbase].split(':')
             goal_usage = goals[coinbase].split(':')[1] if coinbase in goals.keys() else 0
+        ## debug
 
         return jsonify(goalUsage=goal_usage)
 
@@ -293,23 +291,33 @@ def apigoal(coinbase):
 def apigoalcheck(coinbase):
     # check if goal has been met
     # if yes, distribute reward
-    # disabled temporarily
+
+    # disabled
     abort(501)
     try:
         eth.call_with_transaction(eth.eth_coinbase(),
             contract_address,
-            'checkGoal(address,uint64)',
+            'checkGoal(address,uint256)',
             [coinbase, int(time.time())])
     except:
         pass
-    finally:
-        ledger[coinbase] += 10
 
-@app.route('/transfer')
+@app.route('/transfer', methods=['POST'])
 def transfer():
     # transfer greencoins to a specified wallet
     if request.method == 'POST':
-        pass
+        request_data = json.loads(request.data)
+
+        sender = request_data['sender']
+        receiver = request_data['recipient']
+        amount = int(request_data['amount'])
+        eth.call_with_transaction(eth.eth_coinbase(), 
+                        contract_address,
+                        'debit(address,uint256)', [sender,amount])
+        eth.call_with_transaction(eth.eth_coinbase(), 
+                        contract_address,
+                        'credit(address,uint256)', [receiver,amount])
+        return jsonify(status='success')
 
 @app.route('/logs/transactions')
 def gettx():
