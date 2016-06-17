@@ -10,6 +10,7 @@ contract Carboncoin {
 
     mapping (address => Goal) internal goals; /* to maintain goals/usage */
     mapping (address => uint256) internal ledger; /* to maintain carbon coin balance */
+    /* WARNING: in ledger mapping above, the address should actually map to a signed int to prevent overflows */
 
     address public master;
 
