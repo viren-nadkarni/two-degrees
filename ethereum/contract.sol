@@ -1,39 +1,38 @@
 contract Carboncoin {
     struct Goal {
-        uint goalTimestamp;
-        uint goalUsage;
-        uint currentCumulativeUsage;
-        uint previousCumulativeUsage;
+        uint256 goalTimestamp;
+        uint256 goalUsage;
+        uint256 currentCumulativeUsage;
+        uint256 previousCumulativeUsage;
     }
     
     /* TODO: carboncoin conversion rate? */
 
     mapping (address => Goal) internal goals; /* to maintain goals/usage */
-    mapping (address => uint) internal ledger; /* to maintain carbon coin balance */
+    mapping (address => uint256) internal ledger; /* to maintain carbon coin balance */
 
     address public master;
 
-    event earnCoin(address target, uint amount);
-    event spendCoin(address target, uint amount);
+    event earnCoin(address target, uint256 amount);
+    event spendCoin(address target, uint256 amount);
 
     function Carboncoin() {
         master = msg.sender;
     }
 
-    function balance() public constant returns (uint) {
+    function balance() public constant returns (uint256) {
         return ledger[msg.sender];
     }
-    function balance(address wallet) public constant returns (uint) {
+    function balanceOf(address wallet) public constant returns (uint256) {
         return ledger[wallet];
     }
 
-    function credit(address target, uint amount) public {
+    function credit(address target, uint256 amount) public {
         ledger[target] += amount;
 
         earnCoin(target, amount);
     }
-
-    function debit(address target, uint amount) public {
+    function debit(address target, uint256 amount) public {
         ledger[target] -= amount;
 
         spendCoin(target, amount);
@@ -41,23 +40,23 @@ contract Carboncoin {
 
     /* TODO: limit access to owner */
     
-    function setGoal(address target, uint goalTimestamp, uint goalUsage) {
+    function setGoal(address target, uint256 goalTimestamp, uint256 goalUsage) public {
         goals[target].goalTimestamp = goalTimestamp;
         goals[target].goalUsage = goalUsage;
     }
 
-    function getGoal(address coinbase) returns (uint) {
+    function getGoal(address coinbase) public returns (uint256) {
         return goals[coinbase].goalUsage;
     }
 
-    function recordUsage(address target, uint usage) {
+    function recordUsage(address target, uint256 usage) public {
         goals[target].currentCumulativeUsage += usage;
     }
 
-    function checkGoal(address target, uint currentTimestamp) returns (bool) {
-        uint goalTimestamp = goals[target].goalTimestamp;
-        uint goalUsage = goals[target].goalUsage;
-        uint totalUsage = goals[target].currentCumulativeUsage - goals[target].previousCumulativeUsage;
+    function checkGoal(address target, uint256 currentTimestamp) public returns (bool) {
+        uint256 goalTimestamp = goals[target].goalTimestamp;
+        uint256 goalUsage = goals[target].goalUsage;
+        uint256 totalUsage = goals[target].currentCumulativeUsage - goals[target].previousCumulativeUsage;
 
         /*if (currentTimestamp >= goalTimestamp) { */
         if (totalUsage < goalUsage) {
