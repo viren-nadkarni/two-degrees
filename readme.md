@@ -24,6 +24,7 @@ two° has several components:
 ├── ethereum/       Ethereum stuff: API wrappers, genesis block, wallet, etc.
 ├── mobile/         Ionic mobile app
 ├── mock/           API to provide mock users to web dashboard
+├── stats/          A sleek dashboard to display blockchain network statistics
 ├── usage/          Scripts that took usage readings on Raspberry Pi
 └── webtail/        Webtail for ethereum logs
 ```
